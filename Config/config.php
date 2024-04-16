@@ -1,0 +1,19 @@
+
+<?php
+// Thông tin kết nối đến cơ sở dữ liệu MySQL
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "shophoa";
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    // Xử lý các lỗi kết nối hoặc truy vấn
+    echo "Lỗi kết nối: " . $e->getMessage();
+}
+
+?>
+
+
