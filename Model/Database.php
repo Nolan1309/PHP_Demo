@@ -519,3 +519,37 @@ class Database
         }
     }
 }
+
+
+
+
+// check số lượng prodcut
+function check_product_soluong($id, $size)
+{
+    global $conn; // Biến kết nối PDO
+
+    $sql = "SELECT Soluong FROM sizesanpham WHERE MaSP = :id AND Size = :size";
+    $stmt = $conn->prepare($sql); 
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT); 
+    $stmt->bindParam(':size', $size, PDO::PARAM_STR); 
+    $stmt->execute();
+    $soluongkho = $stmt->fetchColumn();
+    $stmt->closeCursor();
+    // Kiểm tra nếu không có dữ liệu trả về, trả về 0, ngược lại trả về số lượng
+    return $soluongkho !== false ? $soluongkho : 0;
+}
+function productCart($idProduct){
+    global $conn;
+    try {
+        $sql = "SELECT * FROM `product` WHERE idProduct = :idProduct";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':idProduct', $idProduct, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    } catch (PDOException $e) {
+        echo "Lỗi truy vấn: " . $e->getMessage();
+        return false;
+    }
+}

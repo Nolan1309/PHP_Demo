@@ -43,9 +43,7 @@
 
         .btn-clicked {
             background-color: #d9534f;
-            /* Đặt màu bạn muốn cho nút khi được click */
             color: #fff;
-            /* Đặt màu chữ */
         }
 
         .soluongP {
@@ -56,7 +54,6 @@
             margin-bottom: 10px;
         }
 
-        /* CSS cho phần tử giá bán */
         .price {
             color: #ff0000;
             font-size: 16px;
@@ -64,17 +61,81 @@
             margin-top: 5px;
             margin-bottom: 20px;
         }
+
+        .btn-size-input {
+            display: none;
+        }
+
+        .btn-size-label {
+            display: inline-block;
+            padding: 5px 20px;
+            border: 2px solid #d9534f;
+            border-radius: 4px;
+            background-color: transparent;
+            color: #d9534f;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-size-label:hover {
+            background-color: #d9534f;
+            color: #fff;
+        }
+
+        .btn-size-input:checked+.btn-size-label {
+            background-color: #d9534f;
+            color: #fff;
+        }
+
+        .input-group-btn .btn {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            font-size: 16px;
+            border: none;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .input-group-btn .btn:hover {
+            background-color: #e0e0e0;
+
+        }
+
+        .input-group-btn .btn:active {
+            background-color: #d0d0d0;
+
+        }
+
+        /* CSS */
+        .input-group {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .quantity-left-minus,
+        .quantity-right-plus {
+            padding: 5px 10px;
+            /* Điều chỉnh kích thước của nút */
+        }
+
+        .ml-1 {
+            margin-left: 5px;
+            /* Khoảng cách giữa các nút */
+        }
+
+        .form-control.input-number {
+            width: 100px !important;
+            text-align: center;
+            flex: none;
+        }
     </style>
 </head>
 
 <body>
-
-
-
-
-
-
-
     <!-- main wrapper start -->
     <main>
         <!-- breadcrumb area start -->
@@ -120,107 +181,119 @@
                     <!-- product details wrapper start -->
                     <div class="col-lg-12 order-1 order-lg-2">
                         <!-- product details inner end -->
-                        <div class="product-details-inner">
-                            <div class="row">
-                                <div class="col-lg-5">
-                                    <div class="product-large-slider">
-                                        <?php foreach ($hinhanh as $data) { ?>
-                                            <div class="pro-large-img img-zoom">
-                                                <img src="Library/images/product/<?php echo $data->DuongDan; ?>" alt="product-details" />
-                                            </div>
+                        <form action="?View=addtocart" method="POST" enctype="multipart/form-data">
+                            <div class="product-details-inner">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <div class="product-large-slider">
+                                            <?php foreach ($hinhanh as $data) { ?>
+                                                <div class="pro-large-img img-zoom">
+                                                    <img src="Library/images/product/<?php echo $data->DuongDan; ?>" alt="product-details" />
+                                                </div>
 
-                                        <?php } ?>
+                                            <?php } ?>
+                                        </div>
+                                        <div class="pro-nav slick-row-10 slick-arrow-style">
+                                            <?php foreach ($hinhanh as $data) { ?>
+                                                <div class="pro-nav-thumb">
+                                                    <img src="Library/images/product/<?php echo $data->DuongDan; ?>" alt="product-details" />
+                                                </div>
+
+                                            <?php } ?>
+                                        </div>
                                     </div>
-                                    <div class="pro-nav slick-row-10 slick-arrow-style">
-                                        <?php foreach ($hinhanh as $data) { ?>
-                                            <div class="pro-nav-thumb">
-                                                <img src="Library/images/product/<?php echo $data->DuongDan; ?>" alt="product-details" />
-                                            </div>
-
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                                <div class="col-lg-7">
-                                    <div class="product-details-des">
-                                        <?php foreach ($product_dt as $datadt) { ?>
-                                            <h3 class="product-name"><?php echo $datadt["TenSP"]; ?></h3>
-                                            <div class="ratings d-flex">
-                                                <?php foreach ($totalReview as $totalRV) {
-                                                    $stars = '';
-                                                    if ($totalRV['TongDiemDanhGia'] >= 5) {
-                                                        $stars = '5';
-                                                    } elseif ($totalRV['TongDiemDanhGia'] >= 3) {
-                                                        $stars = '3';
-                                                    } elseif ($totalRV['TongDiemDanhGia'] >= 1) {
-                                                        $stars = '2';
-                                                    }
-
-                                                    // Hiển thị số sao
-                                                    for ($i = 1; $i <= 5; $i++) {
-                                                        if ($i <= $stars) {
-                                                            echo '<span class="good"><i class="fa fa-star"></i></span>';
-                                                        } else {
-                                                            echo '<span><i class="lnr lnr-star-empty"></i></span>';
+                                    <div class="col-lg-7">
+                                        <div class="product-details-des">
+                                            <?php foreach ($product_dt as $datadt) { ?>
+                                                <h3 class="product-name"><?php echo $datadt["TenSP"]; ?></h3>
+                                                <div class="ratings d-flex">
+                                                    <?php foreach ($totalReview as $totalRV) {
+                                                        $stars = '';
+                                                        if ($totalRV['TongDiemDanhGia'] >= 5) {
+                                                            $stars = '5';
+                                                        } elseif ($totalRV['TongDiemDanhGia'] >= 3) {
+                                                            $stars = '3';
+                                                        } elseif ($totalRV['TongDiemDanhGia'] >= 1) {
+                                                            $stars = '2';
                                                         }
-                                                    }
-                                                ?>
 
-                                                    <div class="pro-review">
-                                                        <span><?php echo $totalRV["SoLuongDanhGia"]; ?> Reviews</span>
-                                                    </div>
-                                                <?php } ?>
-                                            </div>
-                                            <div class="price-box">
-                                                <?php
-                                                $firstSize = $sizeproduct[0];
-                                                ?>
-                                                <div class="availability1" style="display: inline;">
-                                                    <p id="soluongP_<?php echo $sizeC; ?>" class="soluongP">Số lượng : <?php echo $firstSize["Soluong"]; ?></p>
-                                                    <p id="price_<?php echo $sizeC; ?>" class="price">Giá bán : <?php echo number_format($firstSize["GiaBan"]); ?></p>
+                                                        // Hiển thị số sao
+                                                        for ($i = 1; $i <= 5; $i++) {
+                                                            if ($i <= $stars) {
+                                                                echo '<span class="good"><i class="fa fa-star"></i></span>';
+                                                            } else {
+                                                                echo '<span><i class="lnr lnr-star-empty"></i></span>';
+                                                            }
+                                                        }
+                                                    ?>
+
+                                                        <div class="pro-review">
+                                                            <span><?php echo $totalRV["SoLuongDanhGia"]; ?> Reviews</span>
+                                                        </div>
+                                                    <?php } ?>
                                                 </div>
-                                                <?php foreach ($sizeproduct as $size) {
-                                                    $sizeC = $size["Size"];
-
-                                                ?>
-
-                                                    <div class="availability" style="display: inline;">
-                                                        <p id="soluongP_<?php echo $sizeC; ?>" class="soluongP" style="display: none;">Số lượng : <?php echo $size["Soluong"]; ?></p>
-                                                        <p id="price_<?php echo $sizeC; ?>" class="price" style="display: none;">Giá bán : <?php echo number_format($size["GiaBan"]); ?></p>
+                                                <div class="price-box">
+                                                    <?php
+                                                    $firstSize = $sizeproduct[0];
+                                                    ?>
+                                                    <div class="availability1" style="display: inline;">
+                                                        <p id="soluongP_<?php echo $sizeC; ?>" class="soluongP">Số lượng : <?php echo $firstSize["Soluong"]; ?></p>
+                                                        <p id="price_<?php echo $sizeC; ?>" class="price">Giá bán : <?php echo number_format($firstSize["GiaBan"]); ?></p>
+                                                       
                                                     </div>
-                                                <?php } ?>
-                                                <?php foreach ($sizeproduct as $size) {
-                                                    $sizeC = $size["Size"];
-                                                ?>
-                                                    <!-- <button class="btn btn-size" onclick="toggleButtonColor(this.id);showPrice('<? //php // echo $sizeC; 
-                                                                                                                                        ?>')"><? // php // echo $size["Size"];  
-                                                                                                                                                ?></button> -->
-                                                    <button class="btn btn-size" onclick="toggleButtonColor(this.id); showPrice('<?php echo $sizeC; ?>')" id="<?php echo $sizeC; ?>"><?php echo $size["Size"]; ?></button>
+                                                    <?php foreach ($sizeproduct as $size) {
+                                                        $sizeC = $size["Size"];
 
-                                                <?php } ?>
-                                            </div>
+                                                    ?>
+
+                                                        <div class="availability" style="display: inline;">
+                                                            <p id="soluongP_<?php echo $sizeC; ?>" class="soluongP" style="display: none;">Số lượng : <?php echo $size["Soluong"]; ?></p>
+                                                            <p id="price_<?php echo $sizeC; ?>" class="price" style="display: none;">Giá bán : <?php echo number_format($size["GiaBan"]); ?></p>                                                        
+                                                            <input type="hidden" name="dongiaban_<?php echo $sizeC; ?>" value="<?php echo number_format($size["GiaBan"]); ?>">
+
+                                                        </div>
+                                                    <?php } ?>
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="quantity-left-minus btn" id="tru"><i class="fas fa-minus"></i></button>
+                                                        </span>
+                                                        <input type="text" id="soluong" name="soluong" class="form-control input-number" value="1" min="1">
+                                                        <span class="input-group-btn ml-1">
+                                                            <button type="button" class="quantity-right-plus btn" id="cong"><i class="fas fa-plus"></i></button>
+                                                        </span>
+                                                    </div>
 
 
+                                                    <?php foreach ($sizeproduct as $size) {
+                                                        $sizeC = $size["Size"];
+                                                    ?>
+                                                        <input value="<?php echo $size['Size']; ?>" required type="radio" name="size" class="btn-size-input" id="<?php echo $sizeC; ?>" onclick="toggleButtonColor(this.id); showPrice('<?php echo $sizeC; ?>')">
 
-                                            <p class="pro-desc">
-                                                <?php
-                                                echo $datadt["MotaNgan"];
-                                                ?>
-                                            </p>
+                                                        <label for="<?php echo $size["Size"]; ?>" class="btn-size-label"><?php echo $size["Size"]; ?></label>
 
-                                            <div class="quantity-cart-box d-flex align-items-center">
-                                                <div class="action_link">
-                                                    <a class="btn btn-cart2" href="?View=cart?id=<?php echo $idproduct; ?>&size=" id="addToCartButton" onclick="addToCart()">Add to cart</a>
-
+                                                    <?php } ?>
                                                 </div>
-                                            </div>
-
-
+                                                <p class="pro-desc">
+                                                    <?php
+                                                    echo $datadt["MotaNgan"];
+                                                    ?>
+                                                </p>
+                                                <input type="hidden" name="idproduct" value='<?php echo $idproduct; ?>'>
+                                              
+                                                <div class="quantity-cart-box d-flex align-items-center">
+                                                    <div class="action_link">
+                                                        <!-- <a class="btn btn-cart2" href="?View=cart?id=<?php //echo $idproduct; 
+                                                                                                            ?>&size=" id="addToCartButton" onclick="addToCart()">Add to cart</a> -->
+                                                        <!-- <a class="btn btn-cart2" href="?View=cart">Add to cart</a> -->
+                                                        <button class="btn btn-cart2 addtocart" name="addtocart">Add to cart</button>
+                                                    </div>
+                                                </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                         <!-- product details inner end -->
-
                         <!-- product details reviews start -->
                         <div class="product-details-reviews section-space pb-0">
                             <div class="row">
@@ -432,6 +505,41 @@
     <!-- Scroll to Top End -->
 
     <script>
+        // JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            var soluongInput = document.getElementById('soluong');
+            var truButton = document.getElementById('tru');
+            var congButton = document.getElementById('cong');
+
+            // Hàm kiểm tra và cập nhật giá trị của input số lượng
+            function updateSoluongValue(newValue) {
+                var maxValue = parseInt(soluongInput.max);
+                if (newValue <= 0 || isNaN(newValue)) {
+                    soluongInput.value = 1;
+                } else if (newValue > maxValue) {
+                    soluongInput.value = maxValue;
+                } else {
+                    soluongInput.value = newValue;
+                }
+            }
+
+            truButton.addEventListener('click', function() {
+                var currentValue = parseInt(soluongInput.value);
+                updateSoluongValue(currentValue - 1);
+            });
+
+            congButton.addEventListener('click', function() {
+                var currentValue = parseInt(soluongInput.value);
+                updateSoluongValue(currentValue + 1);
+            });
+
+            // Kiểm tra và cập nhật giá trị khi có sự thay đổi trong input số lượng
+            soluongInput.addEventListener('input', function() {
+                updateSoluongValue(parseInt(this.value));
+            });
+        });
+
+
         function toggleButtonColor(buttonId) {
             var buttons = document.querySelectorAll('.btn-size');
             buttons.forEach(function(button) {
@@ -447,22 +555,24 @@
         function addToCart() {
             // Lấy id sản phẩm và size được chọn
             var productId = <?php echo $idproduct; ?>;
-            var selectedSize = document.querySelector('.btn-size.btn-clicked').innerText;
-
-            // Lấy giá tiền của size đã chọn
-            var price = document.getElementById('price_' + selectedSize).innerText.trim().replace('Giá bán : ', '').replace(/\D/g, '');
-
-            // Kiểm tra xem size và giá tiền đã được chọn chưa
-            if (selectedSize && price) {
-                // Thực hiện các hành động mua hàng ở đây, ví dụ: thêm vào giỏ hàng, chuyển hướng đến trang thanh toán, vv.
-                console.log("ID Sản phẩm: " + productId);
-                console.log("Size đã chọn: " + selectedSize);
-                console.log("Giá tiền: " + price);
+            var selectedSizeElement = document.querySelector('input[name="size"]:checked');
+            if (selectedSizeElement !== null) {
+                var selectedSize = selectedSizeElement.nextElementSibling.innerText;
+                var price = document.getElementById('price_' + selectedSize);
+                if (price !== null) {
+                    var priceText = price.innerText.trim().replace('Giá bán : ', '').replace(/\D/g, '');
+                    console.log("ID Sản phẩm: " + productId);
+                    console.log("Size đã chọn: " + selectedSize);
+                    console.log("Giá tiền: " + priceText);
+                } else {
+                    console.error('Price element not found.');
+                }
             } else {
-                // Nếu không có size hoặc giá tiền, hiển thị thông báo lỗi
+                console.error('Selected size element not found.');
                 alert('Please select a size before adding to cart.');
             }
         }
+
 
         var allAvailabilities = document.querySelectorAll('.availability1');
         allAvailabilities.forEach(function(availability, index) {

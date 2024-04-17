@@ -10,6 +10,11 @@
     <!--=== Favicon ===-->
     <link rel="shortcut icon" href="./Library/assets/img/favicon.ico" type="image/x-icon" />
     <!-- Google fonts include -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,900%7CYesteryear" rel="stylesheet">
     <!-- All Vendor & plugins CSS include -->
     <link href="./Library/assets/css/vendor.css" rel="stylesheet">
@@ -17,7 +22,10 @@
     <link href="./Library/assets/css/style.css" rel="stylesheet">
  
 </head>
-
+<?php 
+  ob_start();
+  session_start(); 
+?>
 <body>
     <?php
         //include_once('Config/database.php');

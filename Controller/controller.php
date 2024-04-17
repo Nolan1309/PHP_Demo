@@ -56,7 +56,7 @@
                 include('View/product-details-affiliate.php');
                 break;
             case 'addtocart':
-                include('model/cart.php');
+                include('Model/Cart.php');
                 break;
             case 'order':
                 include('model/cart.php');

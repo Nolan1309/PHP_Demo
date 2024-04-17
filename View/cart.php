@@ -19,124 +19,12 @@
     <!-- Main Style CSS -->
     <link href="../Library/assets/css/style.css" rel="stylesheet">
 
-    <!--[if lt IE 9]>
-<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
-
 </head>
 
 <body>
 
-    <?php
-        include '../Layout/header.php'
-    ?>
 
-    <!-- off-canvas menu start -->
-    <aside class="off-canvas-wrapper">
-        <div class="off-canvas-overlay"></div>
-        <div class="off-canvas-inner-content">
-            <div class="btn-close-off-canvas">
-                <i class="lnr lnr-cross"></i>
-            </div>
 
-            <div class="off-canvas-inner">
-                <!-- search box start -->
-                <div class="search-box-offcanvas">
-                    <form>
-                        <input type="text" placeholder="Search Here...">
-                        <button class="search-btn"><i class="lnr lnr-magnifier"></i></button>
-                    </form>
-                </div>
-                <!-- search box end -->
-
-                <!-- mobile menu start -->
-                <div class="mobile-navigation">
-
-                    <!-- mobile menu navigation start -->
-                    <nav>
-                        <ul class="mobile-menu">
-                            <li class="menu-item-has-children"><a href="../index.php">Home</a>
-                              
-                            </li>
-                          
-                            <li class="menu-item-has-children "><a href="shop.php">shop</a>
-                                <ul class="dropdown">
-                                    <li class="menu-item-has-children"><a href="shop.php">Hoa giấy</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop.html">shop grid left sidebar</a></li>
-                                            <li><a href="shop-grid-right-sidebar.html">shop grid right sidebar</a></li>
-                                            <li><a href="shop-grid-full-3-col.html">shop grid full 3 col</a></li>
-                                            <li><a href="shop-grid-full-4-col.html">shop grid full 4 col</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><a href="shop.php">Hoa sáp</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-list-left-sidebar.html">shop list left sidebar</a></li>
-                                            <li><a href="shop-list-right-sidebar.html">shop list right sidebar</a></li>
-                                            <li><a href="shop-list-full-width.html">shop list full width</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><a href="shop.php">Hoa cưới</a>
-                                        <ul class="dropdown">
-                                            <li><a href="product-details.html">product details</a></li>
-                                            <li><a href="product-details-affiliate.html">product details affiliate</a></li>
-                                            <li><a href="product-details-variable.html">product details variable</a></li>
-                                            <li><a href="product-details-group.html">product details group</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children "><a href="blog-grid-full-width.php">Blog</a></li>
-                            <li><a href="contact-us.php">Contact us</a></li>
-                        </ul>
-                    </nav>
-                    <!-- mobile menu navigation end -->
-                </div>
-                <!-- mobile menu end -->
-
-                <div class="mobile-settings">
-                    <ul class="nav">       
-                        <li>
-                            <div class="dropdown mobile-top-dropdown">
-                                <a href="#" class="dropdown-toggle" id="myaccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    My Account
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="myaccount">
-                                    <a class="dropdown-item" href="my-account.php">my account</a>
-                                    <a class="dropdown-item" href="login.php"> login</a>
-                                    <a class="dropdown-item" href="register.php">register</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- offcanvas widget area start -->
-                <div class="offcanvas-widget-area">
-                    <div class="off-canvas-contact-widget">
-                        <ul>
-                            <li><i class="fa fa-mobile"></i>
-                                <a href="#">0365 683 018</a>
-                            </li>
-                            <li><i class="fa fa-envelope-o"></i>
-                                <a href="#">tranfc911@gmail.com</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="off-canvas-social-widget">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
-                    </div>
-                </div>
-                <!-- offcanvas widget area end -->
-            </div>
-        </div>
-    </aside>
-    <!-- off-canvas menu end -->
 
 
 
@@ -174,58 +62,47 @@
                                     <thead>
                                         <tr>
                                             <th class="pro-thumbnail">Thumbnail</th>
-                                            <th class="pro-title">Product</th>
-                                            <th class="pro-price">Price</th>
-                                            <th class="pro-quantity">Quantity</th>
-                                            <th class="pro-subtotal">Total</th>
-                                            <th class="pro-remove">Remove</th>
+                                            <th class="pro-title">Tên sản phẩm</th>
+                                            <th class="pro-price">Giá</th>
+                                            <th class="pro-size">Kích thước</th>
+                                            <th class="pro-quantity">Số lượng</th>
+                                            <th class="pro-subtotal">Thành tiền</th>
+                                            <th class="pro-remove">Xóa</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="../Library/assets/img/product/product-1.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Flowers bouquet pink</a></td>
-                                            <td class="pro-price"><span>$295.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty"><input type="text" value="1"></div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$295.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="../Library/assets/img/product/product-2.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Jasmine flowers white</a></td>
-                                            <td class="pro-price"><span>$275.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty"><input type="text" value="2"></div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$550.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="../Library/assets/img/product/product-3.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Blossom bouquet flower</a></td>
-                                            <td class="pro-price"><span>$295.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1" />
-                                                </div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$295.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="../Library/assets/img/product/product-4.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Hyacinth white stick</a></td>
-                                            <td class="pro-price"><span>$110.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="3" />
-                                                </div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$110.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
+                                        <?php if (isset($_SESSION['cart_product'])) {
+                                            $subtotal = 0;
+                                            $dem = 0;
+                                            foreach ($_SESSION['cart_product'] as $item_cart) {
+                                                $product = productCart($item_cart['MaSP']); 
+                                                foreach($product as $itemProduct) {
+                                                ?>
+                                                
+                                                <tr>
+                                                    <td class="pro-thumbnail"><a href="#"> <img class="img-fluid" src="./Library/images/product/<?php echo $itemProduct['AnhSP']; ?>"/></a></td>
+                                                    <td class="pro-title"><a href="#"><?php echo $itemProduct['TenSP']; ?></a></td>
+                                                    <td class="pro-price"><span><?php echo $item_cart['DonGia']; ?></span></td>
+                                                    <td class="pro-size"><span><?php echo $item_cart['Size']; ?></span></td>
+                                                    <td class="pro-quantity">
+                                                        <div class="pro-qty">
+                                                        <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="<?php echo $item_cart['SoLuong']; ?>" min="1" max="100">
+                                                        </div>
+                                                    </td>
+                                                    <td class="pro-subtotal"><span><?php $number = str_replace(',', '', $item_cart['DonGia']);
+                                                                                    echo number_format($number * $item_cart['SoLuong']); ?></span></td>
+                                                    <td class="pro-remove">
+                                                        <!-- <a href="#" name=delete_cart_product form="delete_cart_product" class="closed"><i class="fa fa-trash-o"></i></a> -->
+                                                        <button type="submit" name=delete_cart_product form="delete_cart_product"  value="Xoa">Xóa</button>
+                                                    </td>
+                                                </tr>
+                                                <?php } ?>
+                                        <?php $subtotal = $subtotal + $number * $item_cart['SoLuong'];
+                                                $dem = $dem + $item_cart['SoLuong'];
+                                            }
+                                        } else {
+                                            echo 'Chưa có sản phẩm trong giỏ hàng của bạn ~~~';
+                                        }; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -277,20 +154,25 @@
     </main>
     <!-- main wrapper end -->
 
-   
-    <?php
-        include '../Layout/footer.php';
-        include '../Layout/quickview.php';
-        include '../Layout/offcanvas_search.php';
-        include '../Layout/offcanvas_minicart.php';
-    ?>
 
     <!-- Scroll to top start -->
     <div class="scroll-top not-visible">
         <i class="fa fa-angle-up"></i>
     </div>
     <!-- Scroll to Top End -->
+    <?php
+    if (isset($_GET['alert'])) { ?>
+        <div id="alertDiv" class="alert alert-success alert-dismissible fade custom-alert " role="alert">
+            <strong> <?php if ($_GET['alert'] !== '') {
+                            echo ' ' . $_GET['alert'];
+                        } ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
 
+    <?php  }
+    ?>
     <!-- All vendor & plugins & active js include here -->
     <!--All Vendor Js -->
     <script src="../Library/assets/js/vendor.js"></script>

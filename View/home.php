@@ -261,45 +261,7 @@
             </div>
         </div>
     </section>
-    <!-- Top 5 product trending month kết thúc -->
-
-    <!-- Bắt đầu Banner / Bài show bài viết-->
-    <!-- <section class="banner-statistics-right">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="banner-item banner-border">
-                            <figure class="banner-thumb">
-                                <a href="./View/blog-details.php">
-                                    <img src="./Library/assets/img/banner/banner-1.jpg" alt="">
-                                </a>
-                                <figcaption class="banner-content banner-content-right">
-                                    <h2 class="text1">for you</h2>
-                                    <h2 class="text2">Tiêu đề blog</h2>
-                                    <a class="store-link" href="./View/shop.php">shop now</a>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="banner-item banner-border">
-                            <figure class="banner-thumb">
-                                <a href="./View/blog-details.php">
-                                    <img src="./Library/assets/img/banner/banner-1.jpg" alt="">
-                                </a>
-                                <figcaption class="banner-content banner-content-right">
-                                    <h2 class="text1">for you</h2>
-                                    <h2 class="text2">Tiêu đề blog</h2>
-                                    <a class="store-link" href="./View/shop.php">shop now</a>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-    <!-- Kết thúc Banner -->
-
+   
     <!-- Sản phẩm show nhanh - có thể mở rộng -->
     <section class="our-product section-space">
         <div class="container">
