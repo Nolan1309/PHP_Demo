@@ -1,6 +1,6 @@
 <?php
 // if (isset($_SESSION['laclac_khachang'])==false) {
-// 	header('location:?view=login'); 
+// 	header('location:?View=login'); 
 // }else{
 //     $kh = $_SESSION['laclac_khachang'];
 
@@ -23,14 +23,30 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,900%7CYesteryear" rel="stylesheet">
 
     <!-- All Vendor & plugins CSS include -->
-    <link href="../Library/assets/css/vendor.css" rel="stylesheet">
+    <link href="./Library/assets/css/vendor.css" rel="stylesheet">
     <!-- Main Style CSS -->
-    <link href="../Library/assets/css/style.css" rel="stylesheet">
+    <link href="./Library/assets/css/style.css" rel="stylesheet">
     <style>
         .order-payment-method {
             background-color: #f7f7f7;
             padding: 20px 0px 30px;
             float: right;
+        }
+
+        select#tinh,
+        select#quan,
+        select#phuong {
+            color: #555;
+            border: 1px solid #ccc;
+            padding: 12px 10px;
+            width: 100%;
+            font-size: 14px;
+            background: #f7f7f7;
+            display: block !important;
+        }
+
+        .nice-select {
+            display: none !important;
         }
     </style>
 </head>
@@ -80,35 +96,85 @@
                                         <div class="col-md-6">
                                             <div class="single-input-item">
                                                 <label for="f_name" class="required">First Name</label>
-                                                <input type="text" id="f_name" placeholder="First Name" required />
+                                                <input type="text" id="f_name" name="f_name" placeholder="First Name" required />
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="single-input-item">
                                                 <label for="l_name" class="required">Last Name</label>
-                                                <input type="text" id="l_name" placeholder="Last Name" required />
+                                                <input type="text" id="l_name" name="l_name" placeholder="Last Name" required />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="single-input-item">
                                         <label for="email" class="required">Email Address</label>
-                                        <input type="email" id="email" placeholder="Email Address" required />
+                                        <input type="email" id="email" name="email" placeholder="Email Address" required />
                                     </div>
 
 
-                                
-                                    <script src="https://esgoo.net/scripts/jquery.js"></script>;
-                                 
-                                    <div class="css_select_div">
-                                        <select class="css_select" id="tinh" name="tinh" title="Chọn Tỉnh Thành">
+
+                                    <script src="https://esgoo.net/scripts/jquery.js"></script>
+                                    <script>
+                                        $(document).ready(function() {
+                                            //Lấy tỉnh thành
+                                            $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function(data_tinh) {
+                                                if (data_tinh.error == 0) {
+                                                    $.each(data_tinh.data, function(key_tinh, val_tinh) {
+                                                        $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
+                                                    });
+                                                    $("#tinh").change(function(e) {
+                                                        var idtinh = $(this).val();
+                                                        //Lấy quận huyện
+                                                        $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function(data_quan) {
+                                                            if (data_quan.error == 0) {
+                                                                $("#quan").html('<option value="0">Quận Huyện</option>');
+                                                                $("#phuong").html('<option value="0">Phường Xã</option>');
+                                                                $.each(data_quan.data, function(key_quan, val_quan) {
+                                                                    $("#quan").append('<option value="' + val_quan.id + '">' + val_quan.full_name + '</option>');
+                                                                });
+                                                                //Lấy phường xã  
+                                                                $("#quan").change(function(e) {
+                                                                    var idquan = $(this).val();
+                                                                    $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function(data_phuong) {
+                                                                        if (data_phuong.error == 0) {
+                                                                            $("#phuong").html('<option value="0">Phường Xã</option>');
+                                                                            $.each(data_phuong.data, function(key_phuong, val_phuong) {
+                                                                                $("#phuong").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name + '</option>');
+                                                                            });
+                                                                        }
+                                                                    });
+                                                                });
+
+                                                            }
+                                                        });
+                                                    });
+
+                                                }
+                                            });
+                                        });
+                                    </script>
+
+
+
+                                    <div class="single-input-item">
+                                        <label for="tinh" class="required" style="display: block;">Tỉnh</label>
+                                        <select id="tinh" name="tinh" title="Chọn Tỉnh Thành" required>
                                             <option value="0">Tỉnh Thành</option>
                                         </select>
-                                        <select class="css_select" id="quan" name="quan" title="Chọn Quận Huyện">
+                                    </div>
+
+                                    <div class="single-input-item">
+                                        <label for="quan" class="required" style="display: block;">Quận</label>
+                                        <select id="quan" name="quan" title="Chọn Quận Huyện" required>
                                             <option value="0">Quận Huyện</option>
                                         </select>
-                                        <select class="css_select" id="phuong" name="phuong" title="Chọn Phường Xã">
+                                    </div>
+
+                                    <div class="single-input-item">
+                                        <label for="phuong" class="required" style="display: block;">Phường</label>
+                                        <select id="phuong" name="phuong" title="Chọn Phường Xã" required>
                                             <option value="0">Phường Xã</option>
                                         </select>
                                     </div>
@@ -116,52 +182,25 @@
 
 
 
-
                                     <div class="single-input-item">
-                                        <label for="state">Đường</label>
-                                        <input type="text" id="state" placeholder="Nhập số đường" />
+                                        <label for="state" class="required">Đường</label>
+                                        <input type="text" id="state" name="diachicuthe" placeholder="Nhập số đường" required />
                                     </div>
 
 
 
                                     <!-- End Địa chỉ -->
                                     <div class="single-input-item">
-                                        <label for="phone">Phone</label>
-                                        <input type="text" id="phone" placeholder="Phone" />
+                                        <label for="phone" class="required">Phone</label>
+                                        <input type="text" id="phone" name="phone" placeholder="Phone" required />
                                     </div>
-
-                                    <div class="checkout-box-wrap">
-                                        <div class="single-input-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="create_pwd">
-                                                <label class="custom-control-label" for="create_pwd">Bạn đã có tài khoản ?</label>
-                                            </div>
-                                        </div>
-                                        <div class="account-create single-form-row">
-                                            <p>Create an account by entering the information below. If you are a
-                                                returning customer please login at the top of the page.</p>
-                                            <div class="single-input-item">
-                                                <label for="pwd" class="required">Account Password</label>
-                                                <input type="password" id="pwd" placeholder="Account Password" required />
-                                            </div>
-                                        </div>
-                                    </div>
-
-
                                     <div class="single-input-item">
                                         <label for="ordernote">Ghi chú</label>
-                                        <textarea name="ordernote" id="ordernote" cols="30" rows="3" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                        <textarea name="ordernote" id="ordernote" cols="30" rows="3" placeholder="Ghi chú đơn hàng"></textarea>
                                     </div>
+                                    <input type="hidden" name="tongtien" value="<?php echo number_format($_POST['tongtien']); ?>">
+                                    <input type="hidden" name="tiengiamgia" value="<?php echo number_format($_POST['tiensale']); ?>">
 
-                                    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                                    <script src="/index.js"></script> -->
-                                    <div class="order-payment-method">
-
-                                        <div class="summary-footer-area">
-                                            <button type="submit" class="btn btn__bg">Đặt hàng</button>
-                                        </div>
-                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -213,11 +252,7 @@
                                                 <td><?php echo $_POST['tamtinh'] . ' đ'; ?></td>
 
                                             </tr>
-                                            <!-- <tr>
-                                                    <td>VAT (10%)</td>
-                                                    <td>$400</td>
-
-                                                </tr> -->
+                                           
                                             <tr>
                                                 <td>Giảm giá</td>
                                                 <td><?php echo number_format($_POST['tiensale']) . ' đ'; ?></td>
@@ -231,8 +266,12 @@
                                     </table>
                                 </div>
                                 <!-- Order Payment Method -->
+                                <div class="order-payment-method">
 
-
+                                    <div class="summary-footer-area">
+                                        <button type="submit" class="btn btn__bg" name="order" form="form_order">Đặt hàng</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -243,6 +282,39 @@
         <!-- checkout main wrapper end -->
     </main>
     <!-- main wrapper end -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.getElementById("form_order");
+
+            form.addEventListener("submit", function(event) {
+                // Kiểm tra email
+                var email = document.getElementById("email").value;
+                if (!validateEmail(email)) {
+                    alert("Email không hợp lệ.");
+                    event.preventDefault(); // Ngăn chặn gửi biểu mẫu nếu có lỗi
+                }
+
+                // Kiểm tra số điện thoại
+                var phone = document.getElementById("phone").value;
+                if (!validatePhone(phone)) {
+                    alert("Số điện thoại không hợp lệ.");
+                    event.preventDefault(); // Ngăn chặn gửi biểu mẫu nếu có lỗi
+                }
+            });
+
+            // Hàm kiểm tra email
+            function validateEmail(email) {
+                var re = /\S+@\S+\.\S+/;
+                return re.test(email);
+            }
+
+            // Hàm kiểm tra số điện thoại
+            function validatePhone(phone) {
+                var re = /^\d{10}$/; // Số điện thoại gồm 10 chữ số
+                return re.test(phone);
+            }
+        });
+    </script>
 
 
 
@@ -255,10 +327,10 @@
     <!-- All vendor & plugins & active js include here -->
     <!--All Vendor Js -->
 
-    <script src="../Library/js/apiprovince.js"></script>
-    <script src="../Library/assets/js/vendor.js"></script>
+
+    <script src="./Library/assets/js/vendor.js"></script>
     <!-- Active Js -->
-    <script src="../Library/assets/js/active.js"></script>
+    <script src="./Library/assets/js/active.js"></script>
 </body>
 
 </html>

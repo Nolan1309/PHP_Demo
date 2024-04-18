@@ -1,3 +1,11 @@
+<?php
+if (!isset($_SESSION['laclac_khachang'])) {
+    header('location:?View=login');
+}else{
+    $kh= $_SESSION['laclac_khachang'];
+}
+?>
+
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -19,124 +27,13 @@
     <!-- Main Style CSS -->
     <link href="../Library/assets/css/style.css" rel="stylesheet">
 
-    <!--[if lt IE 9]>
-<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+
 
 </head>
 
 <body>
 
-    <?php
-        include '../Layout/header.php'
-    ?>
-
-    <!-- off-canvas menu start -->
-    <aside class="off-canvas-wrapper">
-        <div class="off-canvas-overlay"></div>
-        <div class="off-canvas-inner-content">
-            <div class="btn-close-off-canvas">
-                <i class="lnr lnr-cross"></i>
-            </div>
-
-            <div class="off-canvas-inner">
-                <!-- search box start -->
-                <div class="search-box-offcanvas">
-                    <form>
-                        <input type="text" placeholder="Search Here...">
-                        <button class="search-btn"><i class="lnr lnr-magnifier"></i></button>
-                    </form>
-                </div>
-                <!-- search box end -->
-
-                <!-- mobile menu start -->
-                <div class="mobile-navigation">
-
-                    <!-- mobile menu navigation start -->
-                    <nav>
-                        <ul class="mobile-menu">
-                            <li class="menu-item-has-children"><a href="../index.php">Home</a>
-
-                            </li>
-
-                            <li class="menu-item-has-children "><a href="shop.php">shop</a>
-                                <ul class="dropdown">
-                                    <li class="menu-item-has-children"><a href="shop.php">Hoa giấy</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop.html">shop grid left sidebar</a></li>
-                                            <li><a href="shop-grid-right-sidebar.html">shop grid right sidebar</a></li>
-                                            <li><a href="shop-grid-full-3-col.html">shop grid full 3 col</a></li>
-                                            <li><a href="shop-grid-full-4-col.html">shop grid full 4 col</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><a href="shop.php">Hoa sáp</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-list-left-sidebar.html">shop list left sidebar</a></li>
-                                            <li><a href="shop-list-right-sidebar.html">shop list right sidebar</a></li>
-                                            <li><a href="shop-list-full-width.html">shop list full width</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><a href="shop.php">Hoa cưới</a>
-                                        <ul class="dropdown">
-                                            <li><a href="product-details.html">product details</a></li>
-                                            <li><a href="product-details-affiliate.html">product details affiliate</a></li>
-                                            <li><a href="product-details-variable.html">product details variable</a></li>
-                                            <li><a href="product-details-group.html">product details group</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children "><a href="blog-grid-full-width.php">Blog</a></li>
-                            <li><a href="contact-us.php">Contact us</a></li>
-                        </ul>
-                    </nav>
-                    <!-- mobile menu navigation end -->
-                </div>
-                <!-- mobile menu end -->
-
-                <div class="mobile-settings">
-                    <ul class="nav">       
-                        <li>
-                            <div class="dropdown mobile-top-dropdown">
-                                <a href="#" class="dropdown-toggle" id="myaccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    My Account
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="myaccount">
-                                    <a class="dropdown-item" href="my-account.php">my account</a>
-                                    <a class="dropdown-item" href="login-register.html"> login</a>
-                                    <a class="dropdown-item" href="login-register.html">register</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- offcanvas widget area start -->
-                <div class="offcanvas-widget-area">
-                    <div class="off-canvas-contact-widget">
-                        <ul>
-                            <li><i class="fa fa-mobile"></i>
-                                <a href="#">0365 683 018</a>
-                            </li>
-                            <li><i class="fa fa-envelope-o"></i>
-                                <a href="#">tranfc911@gmail.com</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="off-canvas-social-widget">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
-                    </div>
-                </div>
-                <!-- offcanvas widget area end -->
-            </div>
-        </div>
-    </aside>
-    <!-- off-canvas menu end -->
+   
 
 
 
@@ -178,8 +75,8 @@
                                                 Dashboard</a>
                                             <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i>
                                                 Orders</a>
-                                            <a href="#download" data-toggle="tab"><i class="fa fa-cloud-download"></i>
-                                                Download</a>
+                                            <!-- <a href="#download" data-toggle="tab"><i class="fa fa-cloud-download"></i>
+                                                Download</a> -->
                                             <a href="#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i>
                                                 Payment
                                                 Method</a>
@@ -187,7 +84,7 @@
                                                 address</a>
                                             <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account
                                                 Details</a>
-                                            <a href="login-register.html"><i class="fa fa-sign-out"></i> Logout</a>
+                                            <a href="?View=logout"><i class="fa fa-sign-out"></i> Logout</a>
                                         </div>
                                     </div>
                                     <!-- My Account Tab Menu End -->
@@ -200,12 +97,11 @@
                                                 <div class="myaccount-content">
                                                     <h3>Dashboard</h3>
                                                     <div class="welcome">
-                                                        <p>Hello, <strong>Erik Jhonson</strong> (If Not <strong>Jhonson
-                                                                !</strong><a href="login-register.html" class="logout"> Logout</a>)</p>
+                                                        <p>Xin chào, <strong><?php echo $kh["FullName"] ?></strong></p>
                                                     </div>
-                                                    <p class="mb-0">From your account dashboard. you can easily check &
+                                                    <!-- <p class="mb-0">From your account dashboard. you can easily check &
                                                         view your recent orders, manage your shipping and billing addresses
-                                                        and edit your password and account details.</p>
+                                                        and edit your password and account details.</p> -->
                                                 </div>
                                             </div>
                                             <!-- Single Tab Content End -->
@@ -258,7 +154,7 @@
                                             <!-- Single Tab Content End -->
 
                                             <!-- Single Tab Content Start -->
-                                            <div class="tab-pane fade" id="download" role="tabpanel">
+                                            <!-- <div class="tab-pane fade" id="download" role="tabpanel">
                                                 <div class="myaccount-content">
                                                     <h3>Downloads</h3>
                                                     <div class="myaccount-table table-responsive text-center">
@@ -290,7 +186,7 @@
                                                         </table>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <!-- Single Tab Content End -->
 
                                             <!-- Single Tab Content Start -->
@@ -393,12 +289,6 @@
     <!-- main wrapper end -->
 
 
-    <?php
-        include '../Layout/footer.php';
-        include '../Layout/quickview.php';
-        include '../Layout/offcanvas_search.php';
-        include '../Layout/offcanvas_minicart.php';
-    ?>
 
     <!-- Scroll to top start -->
     <div class="scroll-top not-visible">

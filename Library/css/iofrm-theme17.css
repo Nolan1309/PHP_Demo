@@ -1,6 +1,6 @@
 
 body {
-    background-color: #0093FF;
+   background-color:  #0093FF;;
 }
 
 .form-body {
@@ -69,7 +69,7 @@ body {
 
 .img-holder .bg {
     opacity: 0.23;
-    background-image: url("../images/product-1.jpg");
+    background-image: url("../images/background.jpg");
 }
 
 .form-holder {

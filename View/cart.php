@@ -150,14 +150,25 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Giảm giá</td>
-                                                    <td>0</td>
+                                                    <td>
+                                                       <?php
+                                                        $giamgia = 0;
+                                                        if($giamgia == 0){
+                                                            echo 0;
+                                                        }else{
+                                                            echo $giamgia;
+                                                        }
+                                                       ?>
+
+                                                    </td>
                                                 </tr>
                                                 <tr class="total">
                                                     <td>Total</td>
                                                     <td class="total-amount">
 
                                                         <?php if (isset($_SESSION['cart_product'])) {
-                                                            echo number_format($subtotal);
+                                                            echo number_format($subtotal-$giamgia);
+                                                            $totalOrder = $subtotal-$giamgia;
                                                         } else echo '0'; ?>
                                                     </td>
                                                 </tr>
@@ -168,8 +179,8 @@
                                     <input type="hidden" name="tamtinh" value="<?php if (isset($_SESSION['cart_product'])) {
                                                                                     echo number_format($subtotal);
                                                                                 } else echo '0'; ?>">
-                                    <input type="hidden" name="tiensale" id="tiensale" value="0">
-                                    <input type="hidden" name="tongtien" id="tongtien" value="<?php echo $subtotal; ?>">
+                                    <input type="hidden" name="tiensale" id="tiensale" value="<?php echo $giamgia; ?>">
+                                    <input type="hidden" name="tongtien" id="tongtien" value="<?php echo $totalOrder; ?>">
                                     <button type="submit" name="thanhtoan" class="btn btn__bg d-block buttonThanhToan">Thanh toán</button>
                                 </div>
                             </form>

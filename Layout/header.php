@@ -78,17 +78,17 @@
                                         </a>
                                     </li>
                                     <li class="user-hover">
-                                        <a href="../View/my-account.php">
+                                        <a href="?View=account">
                                             <i class="lnr lnr-user"></i>
                                         </a>
                                         <ul class="dropdown-list">
-                                            <li><a href="../View/login.php">login</a></li>
-                                            <li><a href="../View/register.php">register</a></li>
-                                            <li><a href="../View/my-account.php">my account</a></li>
+                                            <li><a href="?View=login">login</a></li>
+                                            <li><a href="?View=sign-up">register</a></li>
+                                            <li><a href="?View=account">my account</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="../View/cart.php" class="minicart-btn">
+                                        <a href="?View=cart" class="minicart-btn">
                                             <i class="lnr lnr-cart"></i>
                                             <div class="notification">2</div>
                                         </a>
@@ -200,9 +200,9 @@
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="myaccount">
-                                <a class="dropdown-item" href="./View/my-account.php">my account</a>
-                                <a class="dropdown-item" href="./View/login.php"> login</a>
-                                <a class="dropdown-item" href="./View/register.php">register</a>
+                                <a class="dropdown-item" href="?View=account">my account</a>
+                                <a class="dropdown-item" href="?View=login"> login</a>
+                                <a class="dropdown-item" href="?View=sign-up">register</a>
                             </div>
                         </div>
                     </li>
