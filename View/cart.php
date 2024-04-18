@@ -19,6 +19,11 @@
     <!-- Main Style CSS -->
     <link href="../Library/assets/css/style.css" rel="stylesheet">
 
+    <style>
+        .buttonThanhToan {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -75,27 +80,33 @@
                                             $subtotal = 0;
                                             $dem = 0;
                                             foreach ($_SESSION['cart_product'] as $item_cart) {
-                                                $product = productCart($item_cart['MaSP']); 
-                                                foreach($product as $itemProduct) {
-                                                ?>
-                                                
-                                                <tr>
-                                                    <td class="pro-thumbnail"><a href="#"> <img class="img-fluid" src="./Library/images/product/<?php echo $itemProduct['AnhSP']; ?>"/></a></td>
-                                                    <td class="pro-title"><a href="#"><?php echo $itemProduct['TenSP']; ?></a></td>
-                                                    <td class="pro-price"><span><?php echo $item_cart['DonGia']; ?></span></td>
-                                                    <td class="pro-size"><span><?php echo $item_cart['Size']; ?></span></td>
-                                                    <td class="pro-quantity">
-                                                        <div class="pro-qty">
-                                                        <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="<?php echo $item_cart['SoLuong']; ?>" min="1" max="100">
-                                                        </div>
-                                                    </td>
-                                                    <td class="pro-subtotal"><span><?php $number = str_replace(',', '', $item_cart['DonGia']);
-                                                                                    echo number_format($number * $item_cart['SoLuong']); ?></span></td>
-                                                    <td class="pro-remove">
-                                                        <!-- <a href="#" name=delete_cart_product form="delete_cart_product" class="closed"><i class="fa fa-trash-o"></i></a> -->
-                                                        <button type="submit" name=delete_cart_product form="delete_cart_product"  value="Xoa">Xóa</button>
-                                                    </td>
-                                                </tr>
+                                                $product = productCart($item_cart['MaSP']);
+                                                foreach ($product as $itemProduct) {
+                                        ?>
+
+                                                    <tr>
+                                                        <td class="pro-thumbnail"><a href="#"> <img class="img-fluid" src="./Library/images/product/<?php echo $itemProduct['AnhSP']; ?>" /></a></td>
+                                                        <td class="pro-title"><a href="#"><?php echo $itemProduct['TenSP']; ?></a></td>
+                                                        <td class="pro-price"><span><?php echo $item_cart['DonGia']; ?></span></td>
+                                                        <td class="pro-size"><span><?php echo $item_cart['Size']; ?></span></td>
+                                                        <td class="pro-quantity">
+                                                            <div class="pro-qty">
+                                                                <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="<?php echo $item_cart['SoLuong']; ?>" min="1" max="100">
+                                                            </div>
+                                                        </td>
+                                                        <td class="pro-subtotal">
+                                                            <span>
+                                                                <?php
+                                                                $number = str_replace(',', '', $item_cart['DonGia']);
+                                                                echo number_format($number * $item_cart['SoLuong']);
+                                                                ?>
+                                                            </span>
+                                                        </td>
+                                                        <td class="pro-remove">
+                                                            <!-- <a href="#" name=delete_cart_product form="delete_cart_product" class="closed"><i class="fa fa-trash-o"></i></a> -->
+                                                            <button type="submit" name=delete_cart_product form="delete_cart_product" value="Xoa">Xóa</button>
+                                                        </td>
+                                                    </tr>
                                                 <?php } ?>
                                         <?php $subtotal = $subtotal + $number * $item_cart['SoLuong'];
                                                 $dem = $dem + $item_cart['SoLuong'];
@@ -110,41 +121,58 @@
                             <div class="cart-update-option d-block d-md-flex justify-content-between">
                                 <div class="apply-coupon-wrapper">
                                     <form action="#" method="post" class=" d-block d-md-flex">
-                                        <input type="text" placeholder="Enter Your Coupon Code" required />
-                                        <button class="btn btn__bg btn__sqr">Apply Coupon</button>
+                                        <input type="text" placeholder="Nhập mã code" required />
+                                        <button class="btn btn__bg btn__sqr">Mã giảm giá</button>
                                     </form>
                                 </div>
-                                <div class="cart-update">
+                                <!-- <div class="cart-update">
                                     <a href="#" class="btn btn__bg">Update Cart</a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-5 ml-auto">
                             <!-- Cart Calculation Area -->
-                            <div class="cart-calculator-wrapper">
-                                <div class="cart-calculate-items">
-                                    <h3>Cart Totals</h3>
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <tr>
-                                                <td>Sub Total</td>
-                                                <td>$230</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shipping</td>
-                                                <td>$70</td>
-                                            </tr>
-                                            <tr class="total">
-                                                <td>Total</td>
-                                                <td class="total-amount">$300</td>
-                                            </tr>
-                                        </table>
+                            <form action="?View=thanhtoan2" method="POST">
+                                <div class="cart-calculator-wrapper">
+                                    <div class="cart-calculate-items">
+                                        <h3>Giỏ hàng</h3>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <tr>
+                                                    <td>Tổng tiền</td>
+                                                    <td>
+                                                        <?php if (isset($_SESSION['cart_product'])) {
+                                                            echo number_format($subtotal);
+                                                        } else echo '0'; ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Giảm giá</td>
+                                                    <td>0</td>
+                                                </tr>
+                                                <tr class="total">
+                                                    <td>Total</td>
+                                                    <td class="total-amount">
+
+                                                        <?php if (isset($_SESSION['cart_product'])) {
+                                                            echo number_format($subtotal);
+                                                        } else echo '0'; ?>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
+                                    <input type="hidden" name="soluongcart" value="<?php echo $dem; ?>">
+                                    <input type="hidden" name="tamtinh" value="<?php if (isset($_SESSION['cart_product'])) {
+                                                                                    echo number_format($subtotal);
+                                                                                } else echo '0'; ?>">
+                                    <input type="hidden" name="tiensale" id="tiensale" value="0">
+                                    <input type="hidden" name="tongtien" id="tongtien" value="<?php echo $subtotal; ?>">
+                                    <button type="submit" name="thanhtoan" class="btn btn__bg d-block buttonThanhToan">Thanh toán</button>
                                 </div>
-                                <a href="checkout.php" class="btn btn__bg d-block">Proceed To Checkout</a>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

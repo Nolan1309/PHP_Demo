@@ -1,3 +1,11 @@
+<?php
+// if (isset($_SESSION['laclac_khachang'])==false) {
+// 	header('location:?view=login'); 
+// }else{
+//     $kh = $_SESSION['laclac_khachang'];
+
+// }
+?>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -18,125 +26,19 @@
     <link href="../Library/assets/css/vendor.css" rel="stylesheet">
     <!-- Main Style CSS -->
     <link href="../Library/assets/css/style.css" rel="stylesheet">
-
-    <!--[if lt IE 9]>
-<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
-
+    <style>
+        .order-payment-method {
+            background-color: #f7f7f7;
+            padding: 20px 0px 30px;
+            float: right;
+        }
+    </style>
 </head>
 
 <body>
 
-    <?php
-        include '../Layout/header.php'
-    ?>
 
-    <!-- off-canvas menu start -->
-    <aside class="off-canvas-wrapper">
-        <div class="off-canvas-overlay"></div>
-        <div class="off-canvas-inner-content">
-            <div class="btn-close-off-canvas">
-                <i class="lnr lnr-cross"></i>
-            </div>
 
-            <div class="off-canvas-inner">
-                <!-- search box start -->
-                <div class="search-box-offcanvas">
-                    <form>
-                        <input type="text" placeholder="Search Here...">
-                        <button class="search-btn"><i class="lnr lnr-magnifier"></i></button>
-                    </form>
-                </div>
-                <!-- search box end -->
-
-                <!-- mobile menu start -->
-                <div class="mobile-navigation">
-
-                    <!-- mobile menu navigation start -->
-                    <nav>
-                        <ul class="mobile-menu">
-                            <li class="menu-item-has-children"><a href="../index.php">Home</a>
-
-                            </li>
-
-                            <li class="menu-item-has-children "><a href="shop.php">shop</a>
-                                <ul class="dropdown">
-                                    <li class="menu-item-has-children"><a href="shop.php">Hoa giấy</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop.html">shop grid left sidebar</a></li>
-                                            <li><a href="shop-grid-right-sidebar.html">shop grid right sidebar</a></li>
-                                            <li><a href="shop-grid-full-3-col.html">shop grid full 3 col</a></li>
-                                            <li><a href="shop-grid-full-4-col.html">shop grid full 4 col</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><a href="shop.php">Hoa sáp</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-list-left-sidebar.html">shop list left sidebar</a></li>
-                                            <li><a href="shop-list-right-sidebar.html">shop list right sidebar</a></li>
-                                            <li><a href="shop-list-full-width.html">shop list full width</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><a href="shop.php">Hoa cưới</a>
-                                        <ul class="dropdown">
-                                            <li><a href="product-details.html">product details</a></li>
-                                            <li><a href="product-details-affiliate.html">product details affiliate</a></li>
-                                            <li><a href="product-details-variable.html">product details variable</a></li>
-                                            <li><a href="product-details-group.html">product details group</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children "><a href="blog-grid-full-width.php">Blog</a></li>
-                            <li><a href="contact-us.php">Contact us</a></li>
-                        </ul>
-                    </nav>
-                    <!-- mobile menu navigation end -->
-                </div>
-                <!-- mobile menu end -->
-
-                <div class="mobile-settings">
-                    <ul class="nav">       
-                        <li>
-                            <div class="dropdown mobile-top-dropdown">
-                                <a href="#" class="dropdown-toggle" id="myaccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    My Account
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="myaccount">
-                                    <a class="dropdown-item" href="my-account.php">my account</a>
-                                    <a class="dropdown-item" href="login-register.html"> login</a>
-                                    <a class="dropdown-item" href="login-register.html">register</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- offcanvas widget area start -->
-                <div class="offcanvas-widget-area">
-                    <div class="off-canvas-contact-widget">
-                        <ul>
-                            <li><i class="fa fa-mobile"></i>
-                                <a href="#">0365 683 018</a>
-                            </li>
-                            <li><i class="fa fa-envelope-o"></i>
-                                <a href="#">tranfc911@gmail.com</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="off-canvas-social-widget">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
-                    </div>
-                </div>
-                <!-- offcanvas widget area end -->
-            </div>
-        </div>
-    </aside>
-    <!-- off-canvas menu end -->
 
 
 
@@ -166,13 +68,14 @@
         <div class="checkout-page-wrapper section-space pb-0">
             <div class="container">
 
-                <div class="row">
+                <div class="row checkout-row">
+
                     <!-- Checkout Billing Details -->
                     <div class="col-lg-6">
                         <div class="checkout-billing-details-wrap">
                             <h2>Thông tin khách hàng</h2>
                             <div class="billing-form-wrap">
-                                <form action="">
+                                <form action="?View=order" method="post" id="form_order">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="single-input-item">
@@ -195,26 +98,23 @@
                                     </div>
 
 
-                                    <div class="single-input-item">
-                                        <label for="tinh" class="required" style="display: block;">Tỉnh</label>
-                                        <select class="diachi" name="" id="province">
-
+                                
+                                    <script src="https://esgoo.net/scripts/jquery.js"></script>;
+                                 
+                                    <div class="css_select_div">
+                                        <select class="css_select" id="tinh" name="tinh" title="Chọn Tỉnh Thành">
+                                            <option value="0">Tỉnh Thành</option>
+                                        </select>
+                                        <select class="css_select" id="quan" name="quan" title="Chọn Quận Huyện">
+                                            <option value="0">Quận Huyện</option>
+                                        </select>
+                                        <select class="css_select" id="phuong" name="phuong" title="Chọn Phường Xã">
+                                            <option value="0">Phường Xã</option>
                                         </select>
                                     </div>
 
-                                    <div class="single-input-item">
-                                        <label for="quan" class="required" style="display: block;">Quận</label>
-                                        <select class="diachi" name="" id="district">
-                                            <option value="">Chọn quận</option>
-                                        </select>
-                                    </div>
 
-                                    <div class="single-input-item">
-                                        <label for="phuong" class="required" style="display: block;">Phường</label>
-                                        <select class="diachi" name="" id="ward">
-                                            <option value="">Chọn phường</option>
-                                        </select>
-                                    </div>
+
 
 
                                     <div class="single-input-item">
@@ -252,10 +152,17 @@
                                         <label for="ordernote">Ghi chú</label>
                                         <textarea name="ordernote" id="ordernote" cols="30" rows="3" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                                     </div>
+
+                                    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                                    <script src="/index.js"></script> -->
+                                    <div class="order-payment-method">
+
+                                        <div class="summary-footer-area">
+                                            <button type="submit" class="btn btn__bg">Đặt hàng</button>
+                                        </div>
+                                    </div>
                                 </form>
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                                <script src="/index.js"></script>
                             </div>
                         </div>
                     </div>
@@ -275,129 +182,61 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><a href="product-details.html">Suscipit Vestibulum <strong> × 1</strong></a>
-                                                </td>
-                                                <td>$165.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="product-details.html">Ami Vestibulum suscipit <strong> × 4</strong></a>
-                                                </td>
-                                                <td>$165.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="product-details.html">Vestibulum suscipit <strong> × 2</strong></a>
-                                                </td>
-                                                <td>$165.00</td>
-                                            </tr>
+                                            <?php
+                                            if (isset($_SESSION['cart_product'])) {
+                                                $subtotal = 0;
+                                                $dem = 0;
+                                                foreach ($_SESSION['cart_product'] as $item_cart) {
+                                                    $product = productCart($item_cart['MaSP']);
+                                                    foreach ($product as $itemProduct) {
+                                            ?>
+                                                        <tr>
+                                                            <td><a href="#"><?php echo $itemProduct['TenSP']; ?> <strong> × <?php echo $item_cart['SoLuong']; ?></strong></a>
+                                                            </td>
+                                                            <td>
+                                                                <?php
+                                                                $number = str_replace(',', '', $item_cart['DonGia']);
+                                                                echo number_format($number * $item_cart['SoLuong']);
+                                                                ?>
+                                                            </td>
+                                                        </tr>
+
+                                                    <?php } ?>
+                                            <?php $subtotal = $subtotal + $number * $item_cart['SoLuong'];
+                                                    $dem = $dem + $item_cart['SoLuong'];
+                                                }
+                                            }  ?>
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <td>Thành tiền</td>
-                                                <td>$400</td>
+                                                <td><?php echo $_POST['tamtinh'] . ' đ'; ?></td>
 
-                                            </tr>
-                                            <tr>
-                                                <td>VAT (10%)</td>
-                                                <td>$400</td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>Giảm giá</td>
-                                                <td>$470</td>
                                             </tr>
                                             <!-- <tr>
-                                                <td>Shipping</td>
-                                                <td class="d-flex justify-content-center">
-                                                    <ul class="shipping-type">
-                                                        <li>
-                                                            <div class="custom-control custom-radio">
-                                                                <input type="radio" id="flatrate" name="shipping" class="custom-control-input" checked />
-                                                                <label class="custom-control-label" for="flatrate">Flat
-                                                                    Rate: $70.00</label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="custom-control custom-radio">
-                                                                <input type="radio" id="freeshipping" name="shipping" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="freeshipping">Free
-                                                                    Shipping</label>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr> -->
+                                                    <td>VAT (10%)</td>
+                                                    <td>$400</td>
+
+                                                </tr> -->
+                                            <tr>
+                                                <td>Giảm giá</td>
+                                                <td><?php echo number_format($_POST['tiensale']) . ' đ'; ?></td>
+                                            </tr>
+
                                             <tr>
                                                 <td>Tổng thanh toán</td>
-                                                <td>$470</td>
+                                                <td><?php echo number_format($_POST['tongtien']) . ' đ'; ?></td>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div>
                                 <!-- Order Payment Method -->
-                                <div class="order-payment-method">
-                                    <!-- <div class="single-payment-method show">
-                                        <div class="payment-method-name">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="cashon" name="paymentmethod" value="cash" class="custom-control-input" checked />
-                                                <label class="custom-control-label" for="cashon">Cash On Delivery</label>
-                                            </div>
-                                        </div>
-                                        <div class="payment-method-details" data-method="cash">
-                                            <p>Pay with cash upon delivery.</p>
-                                        </div>
-                                    </div>
-                                    <div class="single-payment-method">
-                                        <div class="payment-method-name">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="directbank" name="paymentmethod" value="bank" class="custom-control-input" />
-                                                <label class="custom-control-label" for="directbank">Direct Bank
-                                                    Transfer</label>
-                                            </div>
-                                        </div>
-                                        <div class="payment-method-details" data-method="bank">
-                                            <p>Make your payment directly into our bank account. Please use your Order
-                                                ID as the payment reference. Your order will not be shipped until the
-                                                funds have cleared in our account..</p>
-                                        </div>
-                                    </div>
-                                    <div class="single-payment-method">
-                                        <div class="payment-method-name">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="checkpayment" name="paymentmethod" value="check" class="custom-control-input" />
-                                                <label class="custom-control-label" for="checkpayment">Pay with
-                                                    Check</label>
-                                            </div>
-                                        </div>
-                                        <div class="payment-method-details" data-method="check">
-                                            <p>Please send a check to Store Name, Store Street, Store Town, Store State
-                                                / County, Store Postcode.</p>
-                                        </div>
-                                    </div>
-                                    <div class="single-payment-method">
-                                        <div class="payment-method-name">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="paypalpayment" name="paymentmethod" value="paypal" class="custom-control-input" />
-                                                <label class="custom-control-label" for="paypalpayment">Paypal <img src="../Library/assets/img/paypal-card.jpg" class="img-fluid paypal-card" alt="Paypal" /></label>
-                                            </div>
-                                        </div>
-                                        <div class="payment-method-details" data-method="paypal">
-                                            <p>Pay via PayPal; you can pay with your credit card if you don’t have a
-                                                PayPal account.</p>
-                                        </div>
-                                    </div> -->
-                                    <div class="summary-footer-area">
-                                        <div class="custom-control custom-checkbox mb-20">
-                                            <input type="checkbox" class="custom-control-input" id="terms" required />
-                                            <label class="custom-control-label" for="terms">I have read and agree to
-                                                the website <a href="../index.php">terms and conditions.</a></label>
-                                        </div>
-                                        <button type="submit" class="btn btn__bg">Place Order</button>
-                                    </div>
-                                </div>
+
+
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -406,12 +245,7 @@
     <!-- main wrapper end -->
 
 
-    <?php
-        include '../Layout/footer.php';
-        include '../Layout/quickview.php';
-        include '../Layout/offcanvas_search.php';
-        include '../Layout/offcanvas_minicart.php';
-    ?>
+
     <!-- Scroll to top start -->
     <div class="scroll-top not-visible">
         <i class="fa fa-angle-up"></i>
@@ -421,7 +255,7 @@
     <!-- All vendor & plugins & active js include here -->
     <!--All Vendor Js -->
 
-
+    <script src="../Library/js/apiprovince.js"></script>
     <script src="../Library/assets/js/vendor.js"></script>
     <!-- Active Js -->
     <script src="../Library/assets/js/active.js"></script>
