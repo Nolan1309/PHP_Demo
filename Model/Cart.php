@@ -96,9 +96,14 @@ if (isset($_POST['order'])) {
     $phone = $_POST['phone'];
     $ghichu = $_POST['ordernote'];
 
-    $tinh = $_POST['tinh'];
-    $quan = $_POST['quan'];
-    $phuong = $_POST['phuong'];
+    // $tinh = $_POST['tinh'];
+    // $quan = $_POST['quan'];
+    // $phuong = $_POST['phuong'];
+    $tinh = $_POST['tinh_name'];
+    $quan = $_POST['quan_name'];
+    $phuong = $_POST['phuong_name'];
+
+
 
     $tenKH = $fName." ".$lName;
     // $dcnn=$_POST['address']; //địa chỉ người nhận
@@ -110,9 +115,7 @@ if (isset($_POST['order'])) {
     $tientamtinh = $_POST['tamtinh'];
     $tiengiamgia = $_POST['tiengiamgia'];
     $tt = $_POST['tongtien'];
-    echo $tientamtinh;
-    echo $tiengiamgia;
-    echo $tt;
+   
 
     $talbe = '';
     foreach ($_SESSION['cart_product'] as $item_cart) {

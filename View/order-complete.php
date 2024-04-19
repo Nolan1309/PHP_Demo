@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <p class="bread"><span><a href="index.html">Home</a></span> / <span>HOÀN THÀNH MUA HÀNG</span></p>
+                <p class="bread"><span><a href="?View">Home</a></span> / <span>HOÀN THÀNH MUA HÀNG</span></p>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
                 <p class="icon-addcart"><span><i class="fas fa-check"></i></span></p>
                 <h2 class="mb-4">Cảm ơn bạn đã mua hàng, Đơn hàng của bạn đã hoàn tất</h2>
                 <p>
-                    <a href="?view"class="btn btn-primary btn-outline-primary">Home</a>     
+                    <a href="?View"class="btn btn-primary btn-outline-primary">Home</a>     
                 </p>
             </div>
         </div>

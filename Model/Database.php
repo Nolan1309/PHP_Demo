@@ -642,3 +642,52 @@ function order_product( $makh , $tenkh , $sdtKH , $tinh,$quan,$huyen,$duong , $n
         return false; // Error
     }
 }
+
+
+function loadOrderUser($idkhachhang){
+    global $conn;
+    try {
+        $sql = "SELECT * FROM `donhang` WHERE MaKH = :idKhachhang";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':idKhachhang', $idkhachhang, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    } catch (PDOException $e) {
+        echo "Lỗi truy vấn: " . $e->getMessage();
+        return false;
+    }
+}
+
+function loadAddressUser($idkhachhang){
+    global $conn;
+    try {
+        $sql = "SELECT * FROM `addresskh` WHERE AccountID = :idKhachhang";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':idKhachhang', $idkhachhang, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    } catch (PDOException $e) {
+        echo "Lỗi truy vấn: " . $e->getMessage();
+        return false;
+    }
+}
+class admin{
+    public function loadOrderAdmin()
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM `donhang`";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+}
