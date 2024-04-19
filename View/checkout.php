@@ -6,7 +6,7 @@
 
 // }
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
 <head>
@@ -16,16 +16,16 @@
     <meta name="description" content="meta description">
     <title>Floda - Flower eCommerce Bootstrap 4 Template</title>
 
-    <!--=== Favicon ===-->
-    <link rel="shortcut icon" href="../Library/assets/img/favicon.ico" type="image/x-icon" />
+    === Favicon ===-->
+    <!-- <link rel="shortcut icon" href="../Library/assets/img/favicon.ico" type="image/x-icon" /> -->
 
     <!-- Google fonts include -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,900%7CYesteryear" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,900%7CYesteryear" rel="stylesheet"> -->
 
     <!-- All Vendor & plugins CSS include -->
-    <link href="./Library/assets/css/vendor.css" rel="stylesheet">
+    <!-- <link href="./Library/assets/css/vendor.css" rel="stylesheet"> -->
     <!-- Main Style CSS -->
-    <link href="./Library/assets/css/style.css" rel="stylesheet">
+    <!-- <link href="./Library/assets/css/style.css" rel="stylesheet"> -->
     <style>
         .order-payment-method {
             background-color: #f7f7f7;
@@ -49,14 +49,9 @@
             display: none !important;
         }
     </style>
-</head>
+<!-- </head> -->
 
-<body>
-
-
-
-
-
+<!-- <body> -->
 
     <!-- main wrapper start -->
     <main>
@@ -198,8 +193,9 @@
                                         <label for="ordernote">Ghi chú</label>
                                         <textarea name="ordernote" id="ordernote" cols="30" rows="3" placeholder="Ghi chú đơn hàng"></textarea>
                                     </div>
-                                    <input type="hidden" name="tongtien" value="<?php echo number_format($_POST['tongtien']); ?>">
-                                    <input type="hidden" name="tiengiamgia" value="<?php echo number_format($_POST['tiensale']); ?>">
+                                    <input type="hidden" name="tamtinh" value="<?php echo $_POST['tamtinh']; ?>">
+                                    <input type="hidden" name="tiengiamgia" value="<?php echo ($_POST['tiensale']); ?>">
+                                    <input type="hidden" name="tongtien" value="<?php echo ($_POST['tongtien']); ?>">
 
                                 </form>
                             </div>
@@ -324,13 +320,11 @@
     </div>
     <!-- Scroll to Top End -->
 
-    <!-- All vendor & plugins & active js include here -->
-    <!--All Vendor Js -->
 
 
-    <script src="./Library/assets/js/vendor.js"></script>
+    <!-- <script src="./Library/assets/js/vendor.js"></script> -->
     <!-- Active Js -->
-    <script src="./Library/assets/js/active.js"></script>
-</body>
+    <!-- <script src="./Library/assets/js/active.js"></script> -->
+<!-- </body>
 
-</html>
+</html> -->

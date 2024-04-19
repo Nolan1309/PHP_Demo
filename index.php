@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 <!-- Index.php -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,24 +21,25 @@
     <link href="./Library/assets/css/vendor.css" rel="stylesheet">
     <!-- Main Style CSS -->
     <link href="./Library/assets/css/style.css" rel="stylesheet">
- 
+
 </head>
-<?php 
-  ob_start();
-  session_start(); 
+<?php
+ob_start();
+session_start();
 ?>
+
 <body>
     <?php
-        //include_once('Config/database.php');
-        include_once('Model/Database.php');
-        include_once 'Layout/header.php';
-        include_once('Controller/controller.php');
-        include_once ('Layout/footer.php');
+    //include_once('Config/database.php');
+    include_once('Model/Database.php');
+    include_once 'Layout/header.php';
+    include_once('Controller/controller.php');
+    include_once 'Layout/footer.php';
     ?>
 
 
 
-  
+
     <!-- offcanvas mini cart end -->
 
     <!-- Scroll to top start -->

@@ -81,6 +81,13 @@ if (isset($_POST['delete_cart_product'])) {
     }
 }
 
+
+
+// require 'webroot/PHPMailer/src/Exception.php';
+// require 'webroot/PHPMailer/src/PHPMailer.php';
+// require 'webroot/PHPMailer/src/SMTP.php';
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\Exception;
 if (isset($_POST['order'])) {
     $fName = $_POST['f_name']; //người nhận hàng
     $lName = $_POST['l_name']; //người nhận hàng
@@ -93,15 +100,19 @@ if (isset($_POST['order'])) {
     $quan = $_POST['quan'];
     $phuong = $_POST['phuong'];
 
-
+    $tenKH = $fName." ".$lName;
     // $dcnn=$_POST['address']; //địa chỉ người nhận
     // $sdtnn=$_POST['phone'];//số điện thoại người nhận
 
     $kh = $_SESSION['laclac_khachang'];
 
     $makh = $kh['AccountID'];
+    $tientamtinh = $_POST['tamtinh'];
     $tiengiamgia = $_POST['tiengiamgia'];
     $tt = $_POST['tongtien'];
+    echo $tientamtinh;
+    echo $tiengiamgia;
+    echo $tt;
 
     $talbe = '';
     foreach ($_SESSION['cart_product'] as $item_cart) {
@@ -151,10 +162,13 @@ if (isset($_POST['order'])) {
         <th>Giá</th>
         </tr>' . $talbe . '
         </table>
-        <p>Tổng cộng: ' . number_format($tt) . ' đ</p>
+        <p>Tổng cộng: ' . $tt . ' đ</p>
         </body>
         </html>';
-    //$order=order_product($nn,$dcnn,$sdtnn,$makh,$tt);
+      echo  $makh,$tenKH,$phone,$tinh,$quan,$phuong,$diachicuthe,$note,$tientamtinh,$tiengiamgia,$tt;
+
+    $order=order_product($makh,$tenKH,$phone,$tinh,$quan,$phuong,$diachicuthe,$note,$tientamtinh,$tiengiamgia,$tt);
+    header('location:?View=order-complete');
     // if($order){
     //     $mail = new PHPMailer(true);
     //     $mail->isSMTP();                                            // sử dụng SMTP
@@ -164,9 +178,9 @@ if (isset($_POST['order'])) {
     //     $mail->Password   = 'tfwtuuqfwzpgparm';                         // mật khẩu đăng nhập SMTP
     //     $mail->SMTPSecure = 'tls';                                  // giao thức bảo mật TLS
     //     $mail->Port       = 587;
-    //     $mail->setFrom('tungndps21572@fpt.edu.vn', 'Xiny Shop');          // địa chỉ email và tên người gửi
+    //     $mail->setFrom('tungndps21572@fpt.edu.vn', 'Shop Hoa');          // địa chỉ email và tên người gửi
     //     $mail->addAddress($kh['Email'], $kh['TenKH']); // địa chỉ email và tên người nhận
-    //     $mail->Subject = ' Xiny Shop - DON HANG CUA BAN';                               // tiêu đề email
+    //     $mail->Subject = ' Shop Hoa - DON HANG CUA BAN';                               // tiêu đề email
     //     $mail->Body    = $message;     
     //     $mail->isHTML(true);                            // định dạng email dưới dạng HTML
     //     // $mail->addAttachment('path/to/file.pdf');       // đính kèm tập tin PDF

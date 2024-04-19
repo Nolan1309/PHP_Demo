@@ -579,3 +579,66 @@ function newUser($name, $email, $sdt, $password)
         return false;
     }
 }
+function order_product( $makh , $tenkh , $sdtKH , $tinh,$quan,$huyen,$duong , $noteKH ,$tienhang , $tiengiam , $tongtien)
+{
+    global $conn;
+
+    try {
+        // Start a transaction
+        $conn->beginTransaction();
+        // Insert invoice
+        $sql = "INSERT INTO `donhang`(`MaKH`, `TenKH`, `SDTKH`, `tinhKH`, `quanKH`, `huyenKH`, `duongKH`, `noteKH`, `NgayDat`, `NgayGiao`, `TrangThai`, `TienHang`, `TienGiam`, `TongTien`) 
+          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+       // $sql = "INSERT INTO `hoadon`(`MaKH`, `TinhTrang`, `TongTien`) VALUES (?, 'chưa duyệt', ?)";
+        $stmt = $conn->prepare($sql);
+        // $stmt->execute([$makh, $tt]);
+        $trangThai= "Chưa duyệt";
+        $ngayDat = (new DateTime())->format('Y-m-d H:i:s');
+        $ngayGiao = (new DateTime())->format('Y-m-d H:i:s');
+        $stmt->execute([$makh, $tenkh, $sdtKH, $tinh, $quan, $huyen, $duong, $noteKH, $ngayDat, $ngayGiao, $trangThai, $tienhang, $tiengiam, $tongtien]);
+       //Mã đơn hàng
+        $last_insert_id = $conn->lastInsertId();
+
+        // Insert invoice details
+        foreach ($_SESSION['cart_product'] as $item) {
+            $masp = $item['MaSP'];
+            $size = $item['Size'];
+            $sl = $item['SoLuong'];
+
+            $DonGia = str_replace(',', '', $item['DonGia']);
+
+            $ttt = ($item['SoLuong'] * $DonGia);
+           
+            $dg = $DonGia;
+            // $mamau = $item['Mau'];
+            
+
+            $sql3 = "INSERT INTO `chitietdonhang`(`madonhang`, `MaSP`, `Size`,`soluong`, `dongia`, `thanhtien`) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt3 = $conn->prepare($sql3);
+            $stmt3->execute([$last_insert_id, $masp, $size, $sl, $dg, $ttt]);
+
+            // Update product quantity
+            $sql_sl = "UPDATE `sizesanpham` SET `Soluong`=(`Soluong` - ?) WHERE `MaSP`=? AND `Size`=? ";
+            $stmt_sl = $conn->prepare($sql_sl);
+            $stmt_sl->execute([$sl, $masp, $size]);
+        }
+
+        // Insert recipient information
+        $sql4 = "INSERT INTO `addresskh`(`AccountID`, `FullName`, `SDTKH`,`tinhKH`, `quanKH`, `huyenKH`, `duongKH`) VALUES (?, ?, ?, ?, ? , ? , ?)";
+    
+        $stmt4 = $conn->prepare($sql4);
+        $stmt4->execute([$makh, $tenkh, $sdtKH, $tinh, $quan, $huyen , $duong]);
+
+        // Commit transaction
+        $conn->commit();
+
+        // Clear the cart
+        unset($_SESSION['cart_product']);
+
+        return true; // Success
+    } catch (Exception $e) {
+        // Rollback transaction on error
+        $conn->rollback();
+        return false; // Error
+    }
+}

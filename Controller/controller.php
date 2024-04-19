@@ -11,21 +11,21 @@
                 // include('View/register.php');
                 header('location: View/register.php');
                 break;
-            // case 'sign_up':
-            //     $name = $_POST['name'];
-            //     $email = $_POST['email'];
-            //     $sdt = $_POST['sdt'];
-            //     $address = $_POST['address'];
-            //     $password = $_POST['password'];
-            //     $newuser = newUser($name, $email, $sdt, $address, $password);
-            //     if ($newuser) {
-            //         header('location:View/login.php');
-            //         break;
-            //     } else {
-            //         // include('View/register.php');
-            //         header('location: View/register.php');
-            //         break;
-            //     }
+                // case 'sign_up':
+                //     $name = $_POST['name'];
+                //     $email = $_POST['email'];
+                //     $sdt = $_POST['sdt'];
+                //     $address = $_POST['address'];
+                //     $password = $_POST['password'];
+                //     $newuser = newUser($name, $email, $sdt, $address, $password);
+                //     if ($newuser) {
+                //         header('location:View/login.php');
+                //         break;
+                //     } else {
+                //         // include('View/register.php');
+                //         header('location: View/register.php');
+                //         break;
+                //     }
             case 'logout':
                 if (isset($_SESSION['laclac_khachang'])) {
                     unset($_SESSION['laclac_khachang']);
@@ -38,7 +38,7 @@
             case 'contact':
                 include_once('View/contact-us.php');
                 break;
-           
+
             case 'about':
                 include('View/about.php');
                 break;

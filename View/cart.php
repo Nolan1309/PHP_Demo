@@ -151,14 +151,14 @@
                                                 <tr>
                                                     <td>Giảm giá</td>
                                                     <td>
-                                                       <?php
+                                                        <?php
                                                         $giamgia = 0;
-                                                        if($giamgia == 0){
+                                                        if ($giamgia == 0) {
                                                             echo 0;
-                                                        }else{
+                                                        } else {
                                                             echo $giamgia;
                                                         }
-                                                       ?>
+                                                        ?>
 
                                                     </td>
                                                 </tr>
@@ -167,17 +167,18 @@
                                                     <td class="total-amount">
 
                                                         <?php if (isset($_SESSION['cart_product'])) {
-                                                            echo number_format($subtotal-$giamgia);
-                                                            $totalOrder = $subtotal-$giamgia;
+                                                            echo number_format($subtotal - $giamgia);
+                                                            $totalOrder = $subtotal - $giamgia;
                                                         } else echo '0'; ?>
                                                     </td>
                                                 </tr>
                                             </table>
                                         </div>
                                     </div>
+
                                     <input type="hidden" name="soluongcart" value="<?php echo $dem; ?>">
                                     <input type="hidden" name="tamtinh" value="<?php if (isset($_SESSION['cart_product'])) {
-                                                                                    echo number_format($subtotal);
+                                                                                    echo $subtotal;
                                                                                 } else echo '0'; ?>">
                                     <input type="hidden" name="tiensale" id="tiensale" value="<?php echo $giamgia; ?>">
                                     <input type="hidden" name="tongtien" id="tongtien" value="<?php echo $totalOrder; ?>">
