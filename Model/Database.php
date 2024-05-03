@@ -675,19 +675,3 @@ function loadAddressUser($idkhachhang){
         return false;
     }
 }
-class admin{
-    public function loadOrderAdmin()
-    {
-        global $conn;
-        try {
-            $sql = "SELECT * FROM `donhang`";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
-        } catch (PDOException $e) {
-            echo "Lỗi truy vấn: " . $e->getMessage();
-            return false;
-        }
-    }
-}

@@ -1,20 +1,19 @@
 <?php
-$invoiceAdmin = new admin();
-// $invoiceList = $invoiceAdmin->loadOrderAdminActive();
+$CateblogAD = new admin();
+// $CateblogList = $CateblogAD->loadCategoryBaiViet();
 
 
 if (isset($_GET['search'])) {
     $search_query = $_GET['search'];
     if ($search_query != "") {
 
-        $invoiceList = $invoiceAdmin->loadOrderAdminActiveByNameKH($search_query);
+        $CateblogList = $CateblogAD->loadCategoryBaiVietByName($search_query);
     } else {
-        $invoiceList = $invoiceAdmin->loadOrderAdminActive();
+        $CateblogList = $CateblogAD->loadCategoryBaiViet();
     }
 } else {
-    $invoiceList = $invoiceAdmin->loadOrderAdminActive();
+    $CateblogList = $CateblogAD->loadCategoryBaiViet();
 }
-
 
 ?>
 
@@ -29,7 +28,7 @@ if (isset($_GET['search'])) {
         <!-- Page Heading Start -->
         <div class="col-12 col-lg-auto mb-20">
             <div class="page-heading">
-                <h3>Danh sách hóa đơn</span></h3>
+                <h3>Danh mục sản phẩm</span></h3>
             </div>
         </div><!-- Page Heading End -->
 
@@ -37,7 +36,7 @@ if (isset($_GET['search'])) {
 
     <div class="row mbn-30">
 
-
+      
 
         <!-- Invoice List Start -->
         <div class="col-12 mb-30">
@@ -47,14 +46,10 @@ if (isset($_GET['search'])) {
                     <!-- Table Head Start -->
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Mã KH</th>
-                            <th>Tên KH</th>
-                            <th>Ngày đặt</th>
-                            <th>Tiền hàng</th>
-                            <th>Giảm giá</th>
-                            <th>Tổng tiền</th>
-                            <th>Trạng thái</th>
+                        <th>STT</th>
+                            <th>Tên danh mục</th>
+                            
+                           
                             <th>Action</th>
                         </tr>
                     </thead><!-- Table Head End -->
@@ -62,19 +57,14 @@ if (isset($_GET['search'])) {
                     <!-- Table Body Start -->
                     <tbody>
                         <?php
-                        foreach ($invoiceList as $itemInvoice) {
+                        foreach ($CateblogList as $CateblogItem) {
 
                         ?>
                             <tr>
-                                <td><?php echo $itemInvoice["MaDH"]; ?></td>
-                                <td><?php echo $itemInvoice["MaKH"]; ?></td>
-                                <td><?php echo $itemInvoice["TenKH"]; ?></td>
-
-                                <td><?php echo $itemInvoice["NgayDat"]; ?></td>
-                                <td><?php echo $itemInvoice["TienHang"]; ?></td>
-                                <td><?php echo $itemInvoice["TienGiam"]; ?></td>
-                                <td><?php echo $itemInvoice["TongTien"]; ?></td>
-                                <td><span class="badge badge-success"><?php echo $itemInvoice["TrangThai"]; ?></span></td>
+                                <td><?php echo $CateblogItem["idCategory"]; ?></td>
+                                <td><?php echo $CateblogItem["TenDanhMuc"]; ?></td>
+                            
+               
 
 
 

@@ -29,7 +29,16 @@
                 include('View/home.php');
                 break;
             case 'product':
-                include('View/manage-products.php');
+                include('View/product-danhsach.php');
+                break;
+            case 'product-them':
+                include('View/product-them.php');
+                break;
+            case 'product-timkiem':
+                include('View/A_TimKiem.php');
+                break;
+            case 'product-xuly':
+                include('View/product-them.php');
                 break;
             case 'invoice':
                 include('View/invoice-list.php');
@@ -38,10 +47,10 @@
                 include('View/customer.php');
                 break;
             case 'categorySanPham':
-                include('View/manage-products.php');
+                include('View/categorySanPham.php');
                 break;
             case 'categoryBlog':
-                include('View/manage-products.php');
+                include('View/categoryBaiviet.php');
                 break;
 
 

@@ -1,18 +1,18 @@
 <?php
-$invoiceAdmin = new admin();
-// $invoiceList = $invoiceAdmin->loadOrderAdminActive();
+$customerAD = new admin();
+// $customerList = $customerAD->loadKhachHangAccount();
 
 
 if (isset($_GET['search'])) {
     $search_query = $_GET['search'];
     if ($search_query != "") {
 
-        $invoiceList = $invoiceAdmin->loadOrderAdminActiveByNameKH($search_query);
+        $customerList = $customerAD->loadKhachHangAccountByName($search_query);
     } else {
-        $invoiceList = $invoiceAdmin->loadOrderAdminActive();
+        $customerList = $customerAD->loadKhachHangAccount();
     }
 } else {
-    $invoiceList = $invoiceAdmin->loadOrderAdminActive();
+    $customerList = $customerAD->loadKhachHangAccount();
 }
 
 
@@ -29,7 +29,7 @@ if (isset($_GET['search'])) {
         <!-- Page Heading Start -->
         <div class="col-12 col-lg-auto mb-20">
             <div class="page-heading">
-                <h3>Danh sách hóa đơn</span></h3>
+                <h3>Danh sách tài khoản</span></h3>
             </div>
         </div><!-- Page Heading End -->
 
@@ -47,14 +47,13 @@ if (isset($_GET['search'])) {
                     <!-- Table Head Start -->
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Mã KH</th>
-                            <th>Tên KH</th>
-                            <th>Ngày đặt</th>
-                            <th>Tiền hàng</th>
-                            <th>Giảm giá</th>
-                            <th>Tổng tiền</th>
-                            <th>Trạng thái</th>
+                            <th>Account ID</th>
+                            <th>Họ và tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Email đăng nhập</th>
+                            <th>Mật khẩu</th>
+                            <th>Ngày tham gia</th>
+
                             <th>Action</th>
                         </tr>
                     </thead><!-- Table Head End -->
@@ -62,19 +61,17 @@ if (isset($_GET['search'])) {
                     <!-- Table Body Start -->
                     <tbody>
                         <?php
-                        foreach ($invoiceList as $itemInvoice) {
+                        foreach ($customerList as $customerItem) {
 
                         ?>
                             <tr>
-                                <td><?php echo $itemInvoice["MaDH"]; ?></td>
-                                <td><?php echo $itemInvoice["MaKH"]; ?></td>
-                                <td><?php echo $itemInvoice["TenKH"]; ?></td>
+                                <td><?php echo $customerItem["AccountID"]; ?></td>
+                                <td><?php echo $customerItem["FullName"]; ?></td>
+                                <td><?php echo $customerItem["Phone"]; ?></td>
+                                <td><?php echo $customerItem["Email"]; ?></td>
+                                <td><?php echo $customerItem["MatKhau"]; ?></td>
+                                <td><?php echo $customerItem["CreateDate"]; ?></td>
 
-                                <td><?php echo $itemInvoice["NgayDat"]; ?></td>
-                                <td><?php echo $itemInvoice["TienHang"]; ?></td>
-                                <td><?php echo $itemInvoice["TienGiam"]; ?></td>
-                                <td><?php echo $itemInvoice["TongTien"]; ?></td>
-                                <td><span class="badge badge-success"><?php echo $itemInvoice["TrangThai"]; ?></span></td>
 
 
 

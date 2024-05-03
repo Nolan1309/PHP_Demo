@@ -1,6 +1,21 @@
 <?php
 $orderAD = new admin();
-$listOrder = $orderAD->loadOrderAdmin();
+// $listOrder = $orderAD->loadOrderAdmin();
+
+
+if (isset($_GET['search'])) {
+    $search_query = $_GET['search'];
+    if ($search_query != "") {
+
+        $listOrder = $orderAD->loadOrderAdminByNameKH($search_query);
+    } else {
+        $listOrder = $orderAD->loadOrderAdmin();
+    }
+} else {
+    $listOrder = $orderAD->loadOrderAdmin();
+}
+
+
 ?>
 
 
@@ -58,7 +73,7 @@ $listOrder = $orderAD->loadOrderAdmin();
 
                                 <td class="action h4">
                                     <div class="table-action-buttons">
-                                        <a class="view button button-box button-xs button-primary" href="order-details.php"><i class="zmdi zmdi-more"></i></a>
+                                        <a class="view button button-box button-xs button-primary" href="#"><i class="zmdi zmdi-more"></i></a>
                                         <a class="edit button button-box button-xs button-info" href="#"><i class="zmdi zmdi-edit"></i></a>
                                         <a class="delete button button-box button-xs button-danger" href="#"><i class="zmdi zmdi-delete"></i></a>
                                     </div>

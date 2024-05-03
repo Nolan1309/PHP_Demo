@@ -1,20 +1,20 @@
 <?php
-$invoiceAdmin = new admin();
-// $invoiceList = $invoiceAdmin->loadOrderAdminActive();
+$productCate = new admin();
+// $productCateList = $productCate->loadCategorySanPham();
+
 
 
 if (isset($_GET['search'])) {
     $search_query = $_GET['search'];
     if ($search_query != "") {
 
-        $invoiceList = $invoiceAdmin->loadOrderAdminActiveByNameKH($search_query);
+        $productCateList = $productCate->loadCategorySanPhamByName($search_query);
     } else {
-        $invoiceList = $invoiceAdmin->loadOrderAdminActive();
+        $productCateList = $productCate->loadCategorySanPham();
     }
 } else {
-    $invoiceList = $invoiceAdmin->loadOrderAdminActive();
+    $productCateList = $productCate->loadCategorySanPham();
 }
-
 
 ?>
 
@@ -29,7 +29,7 @@ if (isset($_GET['search'])) {
         <!-- Page Heading Start -->
         <div class="col-12 col-lg-auto mb-20">
             <div class="page-heading">
-                <h3>Danh sách hóa đơn</span></h3>
+                <h3>Danh mục sản phẩm</h3>
             </div>
         </div><!-- Page Heading End -->
 
@@ -47,14 +47,10 @@ if (isset($_GET['search'])) {
                     <!-- Table Head Start -->
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Mã KH</th>
-                            <th>Tên KH</th>
-                            <th>Ngày đặt</th>
-                            <th>Tiền hàng</th>
-                            <th>Giảm giá</th>
-                            <th>Tổng tiền</th>
-                            <th>Trạng thái</th>
+                            <th>STT</th>
+                            <th>Tên danh mục</th>
+
+
                             <th>Action</th>
                         </tr>
                     </thead><!-- Table Head End -->
@@ -62,19 +58,14 @@ if (isset($_GET['search'])) {
                     <!-- Table Body Start -->
                     <tbody>
                         <?php
-                        foreach ($invoiceList as $itemInvoice) {
+                        foreach ($productCateList as $CateItem) {
 
                         ?>
                             <tr>
-                                <td><?php echo $itemInvoice["MaDH"]; ?></td>
-                                <td><?php echo $itemInvoice["MaKH"]; ?></td>
-                                <td><?php echo $itemInvoice["TenKH"]; ?></td>
+                                <td><?php echo $CateItem["idDanhmuc"]; ?></td>
+                                <td><?php echo $CateItem["tenDanhmuc"]; ?></td>
 
-                                <td><?php echo $itemInvoice["NgayDat"]; ?></td>
-                                <td><?php echo $itemInvoice["TienHang"]; ?></td>
-                                <td><?php echo $itemInvoice["TienGiam"]; ?></td>
-                                <td><?php echo $itemInvoice["TongTien"]; ?></td>
-                                <td><span class="badge badge-success"><?php echo $itemInvoice["TrangThai"]; ?></span></td>
+
 
 
 
