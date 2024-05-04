@@ -38,7 +38,7 @@
                 include('View/A_TimKiem.php');
                 break;
             case 'product-xuly':
-                include('View/product-them.php');
+                include('View/product-xuly.php');
                 break;
             case 'invoice':
                 include('View/invoice-list.php');

@@ -1,6 +1,10 @@
 <?php
 $productAD = new admin();
 
+if(isset($_GET['alert'])) {
+    echo "<div class='alert'>" . htmlspecialchars($_GET['alert']) . "</div>";
+}
+
 
 if (isset($_GET['search'])) {
     $search_query = $_GET['search'];
