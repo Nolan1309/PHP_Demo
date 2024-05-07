@@ -1,6 +1,6 @@
 <?php
 require_once '../Config/config.php';
-
+require_once 'Product.php';
 class admin
 {
     public function loadOrderAdmin()
@@ -36,6 +36,63 @@ class admin
         global $conn;
         try {
             $sql = "SELECT * FROM `product`";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+    public function loadProductAdminByID($idProduct)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM `product` WHERE idProduct =$idProduct";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+    public function loadProductbyName($tentimkiem)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM product WHERE TenSP LIKE N'%$tentimkiem%'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+    public function loadProductHinhAnhChiTiet($idProduct)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT `IdHinhAnh`, `MaSP`, `DuongDan` FROM `hinhanhsanpham` WHERE MaSP = $idProduct";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function loadProductSizeSanPham($idProduct)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM `sizesanpham` WHERE MaSP =  $idProduct";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -87,20 +144,7 @@ class admin
             return false;
         }
     }
-    public function loadProductbyName($tentimkiem)
-    {
-        global $conn;
-        try {
-            $sql = "SELECT * FROM product WHERE TenSP LIKE N'%$tentimkiem%'";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
-        } catch (PDOException $e) {
-            echo "Lỗi truy vấn: " . $e->getMessage();
-            return false;
-        }
-    }
+
     public function loadOrderAdminByNameKH($tentimkiem)
     {
         global $conn;
@@ -215,6 +259,42 @@ class admin
             return false; // Trả về false nếu có lỗi
         }
     }
+    public function GetIdSizeHinhAnh()
+    {
+        global $conn;
+        try {
+            $sql = "SELECT MAX(`IdHinhAnh`) as MaxID FROM `hinhanhsanpham` ";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['MaxID']; // Trả về giá trị lớn nhất của cột IdHinhAnh
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi
+        }
+    }
+
+    public function Delete($idProduct)
+    {
+        global $conn;
+        try {
+            // Chuẩn bị câu lệnh SQL để xóa sản phẩm có idProduct tương ứng
+            $sql = "DELETE FROM `product` WHERE idProduct = :idProduct";
+
+            // Chuẩn bị và thực thi câu lệnh SQL
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':idProduct', $idProduct, PDO::PARAM_INT);
+            $stmt->execute();
+
+            // Trả về true nếu xóa thành công
+            return true;
+        } catch (PDOException $e) {
+            // Xử lý ngoại lệ nếu có lỗi và trả về false
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+
     public function InsertSize(SizeSanPham $sp)
     {
         global $conn;
@@ -244,6 +324,25 @@ class admin
             // Thực thi câu lệnh SQL
             $stmt->execute();
 
+            return true; // Trả về true khi chèn thành công
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi xảy ra
+        }
+    }
+    public function InsertHinhAnh(SizeHinhAnh $sp)
+    {
+        global $conn;
+        try {
+            $sql = "INSERT INTO `hinhanhsanpham`( `MaSP`, `DuongDan`) VALUES (:MaSP,:DuongDan)";
+            $stmt = $conn->prepare($sql);
+
+
+            $idPro = $sp->getIdProduct();
+            $duongdan = $sp->getDuongDan();
+            $stmt->bindParam(':MaSP', $idPro);
+            $stmt->bindParam(':DuongDan',  $duongdan);
+            $stmt->execute();
             return true; // Trả về true khi chèn thành công
         } catch (PDOException $e) {
             echo "Lỗi truy vấn: " . $e->getMessage();

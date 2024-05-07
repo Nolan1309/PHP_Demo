@@ -74,9 +74,9 @@ if (isset($_GET['search'])) {
 
                                     <td>
                                         <div class="table-action-buttons">
-                                            <a class="view button button-box button-xs button-primary" href="invoice-details.php"><i class="zmdi zmdi-more"></i></a>
-                                            <a class="edit button button-box button-xs button-info" href="#"><i class="zmdi zmdi-edit"></i></a>
-                                            <a class="delete button button-box button-xs button-danger" href="#"><i class="zmdi zmdi-delete"></i></a>
+                                            <a class="view button button-box button-xs button-primary" href="?View=product-chitiet&idProduct=<?php echo $itemProduct['idProduct']; ?>"><i class="zmdi zmdi-more"></i></a>
+                                            <a class="edit button button-box button-xs button-info" href="?View=product-sua&idProduct=<?php echo $itemProduct['idProduct']; ?>"><i class="zmdi zmdi-edit"></i></a>
+                                            <a class="delete button button-box button-xs button-danger"  href="?View=product-xuly&idProduct=<?php echo $itemProduct['idProduct']; ?>"><i class="zmdi zmdi-delete"></i></a>
                                         </div>
                                     </td>
                                 </tr>

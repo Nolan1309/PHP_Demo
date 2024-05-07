@@ -34,6 +34,12 @@
             case 'product-them':
                 include('View/product-them.php');
                 break;
+            case 'product-sua':
+                include('View/product-sua.php');
+                break;
+            case 'product-chitiet':
+                include('View/product-them.php');
+                break;
             case 'product-timkiem':
                 include('View/A_TimKiem.php');
                 break;

@@ -43,4 +43,5 @@ class SizeHinhAnh
     {
         $this->DuongDan = $DuongDan;
     }
+   
 }

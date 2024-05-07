@@ -2,6 +2,7 @@
 include_once 'Model/Product.php';
 include_once 'Model/CategoryProduct.php';
 include_once 'Model/SizeProduct.php';
+include_once 'Model/SizeHinhAnh.php';
 
 if (isset($_POST['addproduct'])) {
     $iddanhmuc = $_POST['category'];
@@ -14,7 +15,7 @@ if (isset($_POST['addproduct'])) {
         $file_name = $_FILES['image']['name'];
         $image = $file_name;
         if ($file['type']  == 'image/jpeg' || $file['type'] == 'image/jpg' || $file['type'] == 'image/png') {
-            move_uploaded_file($file['tmp_name'], '.././Library/images/product/' . $file_name);
+            // move_uploaded_file($file['tmp_name'], '.././Library/images/product/' . $file_name);
             // echo $file_name;
         } else {
             echo "FIle không đúng định dạng";
@@ -22,17 +23,39 @@ if (isset($_POST['addproduct'])) {
         }
     }
 
-    $images = array();
+    // $imagesList = array();
+    // if (isset($_FILES['images'])) {
+    //     $files = $_FILES['images'];
+    //     $files_name = $_FILES['images']['name'];
+    //     $imagesList = $file_name;
+
+    //     foreach ($files_name as $key => $value) {
+
+    //         // move_uploaded_file($files['tmp_name'][$key], '.././Library/images/product/' . $value);
+    //     }
+    // }
+    // foreach ($imagesList as $name) {
+    //     echo $name;
+    //     echo "<br>";
+    // }
+
+    $imagesList = array();
     if (isset($_FILES['images'])) {
         $files = $_FILES['images'];
         $files_name = $_FILES['images']['name'];
-        $images = $file_name;
+        $imagesList = $files_name;
 
         foreach ($files_name as $key => $value) {
-
             move_uploaded_file($files['tmp_name'][$key], '.././Library/images/product/' . $value);
         }
     }
+
+
+
+
+
+
+
     $selected_sizes = array();
     $totalSoLuong = 0;
     if (isset($_POST['size_nho_checkbox'])) {
@@ -98,6 +121,11 @@ if (isset($_POST['addproduct'])) {
                 $check = true;
             }
         }
+        foreach ($imagesList as $name) {
+            $number = $ad->GetIdSizeHinhAnh();
+            $sizeHinhAnh = new SizeHinhAnh($number + 1, $idProduct, $name);
+            $item = $ad->InsertHinhAnh($sizeHinhAnh);
+        }
         if ($check) {
             $alert = "Thêm thành công !";
             echo "<script> alert('$alert');  </script>";
@@ -113,4 +141,20 @@ if (isset($_POST['addproduct'])) {
     } else {
         echo "Không thành công";
     }
+}
+
+// Kiểm tra xem idProduct đã được truyền qua URL chưa
+if (isset($_GET['idProduct'])) {
+    // Lấy giá trị idProduct từ URL
+    $idProduct = $_GET['idProduct'];
+    $ad = new admin();
+    $check_xoa = $ad->Delete($idProduct);
+    if ($check_xoa) {
+        $alert = "Xóa thành công !";
+        echo "<script> alert('$alert');  </script>";
+        echo "<script>window.location.href='?View=product';</script>";
+    }
+} else {
+    // Nếu idProduct không được truyền qua URL, bạn có thể xử lý theo cách khác tại đây hoặc hiển thị thông báo lỗi
+    echo "Không có idProduct được truyền qua URL.";
 }

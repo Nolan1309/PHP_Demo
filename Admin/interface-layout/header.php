@@ -28,14 +28,21 @@
                                 <div class="header-search">
 
                                     <button class="header-search-open d-block d-xl-none"><i class="zmdi zmdi-search"></i></button>
+                                    <?php
+                                    $luutruGiaoDien = ''; // Khởi tạo biến trước khi gán giá trị
+                                    if (isset($_GET['View'])) {
+                                        $luutruGiaoDien = htmlspecialchars($_GET['View']); // Gán giá trị nếu 'View' tồn tại
+                                    }
+                                    ?>
+
 
                                     <div class="header-search-form">
                                         <form action="?View=product-timkiem" method="post" enctype="multipart/form-data">
-                                            <!-- <input type="text" placeholder="Search Here"> -->
-                                            <!-- <button class="btn_timkiem" name="btn_timkiem"><i class="zmdi zmdi-search"></i></button> -->
-                                            <input type="hidden" name="giaodien" value="<?php echo $luutruGiaoDien = $_GET['View']; ?>">
+
+                                            <!-- <input type="hidden" name="giaodien" value="<?php // echo $luutruGiaoDien = $_GET['View']; ?>"> -->
+                                            <input type="hidden" name="giaodien" value="<?php echo $luutruGiaoDien; ?>">
                                             <input type="text" name="search_query" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>" placeholder="Search Here">
-                                            <button type="submit" name="btn_timkiem" ><i class="zmdi zmdi-search"></i></button>
+                                            <button type="submit" name="btn_timkiem"><i class="zmdi zmdi-search"></i></button>
                                         </form>
                                         <button class="header-search-close d-block d-xl-none"><i class="zmdi zmdi-close"></i></button>
                                     </div>
