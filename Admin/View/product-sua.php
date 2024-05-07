@@ -14,6 +14,10 @@ if (isset($_GET['idProduct'])) {
     $productItem = $ad->loadProductAdminByID($idProduct);
     $productList_Images = $ad->loadProductHinhAnhChiTiet($idProduct);
     $productList_SizeSanPham = $ad->loadProductSizeSanPham($idProduct);
+    $arrayImg = array();
+    foreach ($productList_Images as $image) {
+        $arrayImg[] = $image["DuongDan"];
+    }
 } else {
     $alert = "Sản phẩm không tìm thấy ID !";
     echo "<script> alert('$alert');  </script>";
@@ -170,25 +174,33 @@ if (isset($_GET['idProduct'])) {
                             <input type="text" id="TenSP" name="TenSP" required value="<?php echo $item["TenSP"]; ?>">
 
 
+                            <?php
+                            $imageFileName =  $item["AnhSP"];
+                            ?>
                             <label for="image">Ảnh sản phẩm:</label>
-                            <input type="file" id="image" name="image" placeholder="Chọn danh sách ảnh" required accept="image/*">
-                            <img src=".././Library/images/product/<?php echo $item["AnhSP"]; ?>" width="100px" height="100px" alt="" class="product-image">
+                            <input type="file" id="image" name="image" placeholder="Chọn danh sách ảnh" accept="image/*">
+                            <input type="hidden" name="image_hidden" value="<?php echo $imageFileName; ?>">
+
+                            <img id="previewImage" src=".././Library/images/product/<?php echo $item["AnhSP"]; ?>" width="100px" height="100px" alt="" class="product-image">
+
 
 
                             <label for="images">Ảnh sản phẩm chi tiết:</label>
-                            <input type="file" id="images" name="images[]" multiple="multipart" placeholder="Chọn danh sách ảnh" required accept="image/*">
-                            <?php
-                            foreach ($productList_Images as $image) {
-                            ?>
+                            <input type="file" id="images" name="images[]" multiple="multipart" placeholder="Chọn danh sách ảnh" accept="image/*">
+
+
+                            <?php foreach ($productList_Images as $index => $image) : ?>
+                                <input type="hidden" name="images_list[<?php echo $index; ?>]" value="<?php echo $image["DuongDan"]; ?>">
                                 <img src=".././Library/images/product/<?php echo $image["DuongDan"]; ?>" width="100px" height="100px" alt="" class="product-image">
-                            <?php
-                            }
-                            ?>
+                            <?php endforeach; ?>
+
 
                             <?php
                             if ($productList_SizeSanPham) {
                                 $count = count($productList_SizeSanPham);
+                                $tenSize = array();
                                 foreach ($productList_SizeSanPham as $size) {
+                                    $tenSize[] =  $size['Size'];
                             ?>
                                     <label for="size_<?php echo $size['Size']; ?>">Size <?php echo $size['Size']; ?>:</label>
                                     <div class="size-item">
@@ -214,35 +226,32 @@ if (isset($_GET['idProduct'])) {
                                     </div>
                                 <?php
                                 }
-                                // Nếu số lượng kích thước ít hơn 3, hiển thị checkbox cho size L
-                                if ($count < 3) {
-                                ?>
-                                    <label for="size_lon">Size L:</label>
+                                $allSizes = ['S', 'M', 'L'];
+
+                                $missingSizes = array();
+
+                                foreach ($allSizes as $size) {
+
+                                    if (!in_array($size, $tenSize)) {
+
+                                        $missingSizes[] = $size;
+                                    }
+                                }
+                                foreach ($missingSizes as $missingSize) { ?>
+                                    <label for="size_<?php echo $missingSize; ?>">Size <?php echo $missingSize; ?>:</label>
                                     <div class="size-item">
-                                        <input type="checkbox" id="size_lon" data-size="lon" name="size_lon_checkbox" placeholder="Size" onchange="toggleFields('lon')">
-                                        <input type="number" id="SoLuong_lon" name="SoLuong_lon" placeholder="Số lượng" disabled>
-                                        <input type="text" id="TrongLuong_lon" name="TrongLuong_lon" placeholder="Trọng lượng (Đơn vị KG)" disabled>
-                                        <input type="text" id="GiaGoc_lon" name="GiaGoc_lon" placeholder="Giá gốc" disabled>
-                                        <input type="text" id="GiaSale_lon" name="GiaSale_lon" placeholder="Giá sale" disabled>
-                                        <input type="text" id="GiaBan_lon" name="GiaBan_lon" placeholder="Giá bán" disabled>
+                                        <input type="checkbox" id="size_<?php echo $missingSize; ?>" data-size="M" name="size_<?php echo $missingSize; ?>_checkbox" placeholder="Size" onchange="toggleFields('M')">
+                                        <input type="number" id="SoLuong_<?php echo $missingSize; ?>" name="SoLuong_<?php echo $missingSize; ?>" placeholder="Số lượng" disabled>
+                                        <input type="text" id="TrongLuong_<?php echo $missingSize; ?>" name="TrongLuong_<?php echo $missingSize; ?>" placeholder="Trọng lượng (Đơn vị KG)" disabled>
+                                        <input type="text" id="GiaGoc_<?php echo $missingSize; ?>" name="GiaGoc_<?php echo $missingSize; ?>" placeholder="Giá gốc" disabled>
+                                        <input type="text" id="GiaSale_<?php echo $missingSize; ?>" name="GiaSale_<?php echo $missingSize; ?>" placeholder="Giá sale" disabled>
+                                        <input type="text" id="GiaBan_<?php echo $missingSize; ?>" name="GiaBan_<?php echo $missingSize; ?>" placeholder="Giá bán" disabled>
                                     </div>
                                 <?php
-                                }
-                                // Nếu số lượng kích thước ít hơn 2, hiển thị checkbox cho size M
-                                if ($count < 2) {
-                                ?>
-                                    <label for="size_vua">Size M:</label>
-                                    <div class="size-item">
-                                        <input type="checkbox" id="size_vua" data-size="vua" name="size_vua_checkbox" placeholder="Size" onchange="toggleFields('vua')">
-                                        <input type="number" id="SoLuong_vua" name="SoLuong_vua" placeholder="Số lượng" disabled>
-                                        <input type="text" id="TrongLuong_vua" name="TrongLuong_vua" placeholder="Trọng lượng (Đơn vị KG)" disabled>
-                                        <input type="text" id="GiaGoc_vua" name="GiaGoc_vua" placeholder="Giá gốc" disabled>
-                                        <input type="text" id="GiaSale_vua" name="GiaSale_vua" placeholder="Giá sale" disabled>
-                                        <input type="text" id="GiaBan_vua" name="GiaBan_vua" placeholder="Giá bán" disabled>
-                                    </div>
-                                <?php
+
                                 }
                                 ?>
+
                             <?php
                             } else {
                                 echo "Không có kích thước";
@@ -254,8 +263,8 @@ if (isset($_GET['idProduct'])) {
 
                             <label for="MotaDai">Mô tả chi tiết:</label>
                             <textarea id="MotaDai" name="MotaDai" required><?php echo $item["MotaNgan"]; ?></textarea>
-
-                            <input type="submit" name="addproduct" value="Thêm sản phẩm">
+                            <input type="hidden" name="MaSP" value="<?php echo $item["idProduct"];  ?>">
+                            <input type="submit" name="editproduct" value="Cập nhật sản phẩm">
                         <?php } ?>
                     </form>
                 </div>
@@ -265,6 +274,19 @@ if (isset($_GET['idProduct'])) {
 </div>
 
 <script>
+    // function previewImage(event) {
+    //     var input = event.target;
+    //     var reader = new FileReader();
+
+    //     reader.onload = function() {
+    //         var dataURL = reader.result;
+    //         var previewImage = document.getElementById('previewImage');
+    //         previewImage.src = dataURL;
+    //     };
+
+    //     reader.readAsDataURL(input.files[0]);
+    // }
+
     function toggleFields(size) {
         var checkbox = document.getElementById("size_" + size);
         var SoLuong = document.getElementById("SoLuong_" + size);

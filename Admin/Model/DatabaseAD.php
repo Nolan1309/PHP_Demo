@@ -245,6 +245,49 @@ class admin
             return false; // Return false if an error occurs
         }
     }
+    public function UpdateProduct(Product $sp, $idProduct)
+    {
+        global $conn;
+        try {
+            $sql = "UPDATE `product` 
+                SET `idDanhmuc`=:idDanhmuc,
+                    `TenSP`=:TenSP,
+                    `AnhSP`=:AnhSP,
+                    `SoLuong`=:SoLuong,
+                    `MotaNgan`=:MotaNgan,
+                    `MotaDai`=:MotaDai,
+                    `NgaySua`=:NgaySua 
+                WHERE `idProduct` = :idProduct";
+            $stmt = $conn->prepare($sql);
+
+            $idCate = $sp->getDanhmuc();
+            $tensp =  $sp->getTenSP();
+            $anhsp = $sp->getAnhSP();
+            $soluong = $sp->getSoLuong();
+            $motangan =  $sp->getMotaNgan();
+            $motadai = $sp->getMotaDai();
+            $ngayupdate = $sp->getCreateDate();
+
+
+            // Bind parameters
+            $stmt->bindParam(':idDanhmuc', $idCate);
+            $stmt->bindParam(':TenSP', $tensp);
+            $stmt->bindParam(':AnhSP', $anhsp);
+            $stmt->bindParam(':SoLuong', $soluong);
+            $stmt->bindParam(':MotaNgan', $motangan);
+            $stmt->bindParam(':MotaDai', $motadai);
+
+            $stmt->bindParam(':NgaySua', $ngayupdate);
+            $stmt->bindParam(':idProduct', $idProduct);
+
+            $stmt->execute();
+            return true; // Return true upon successful update
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Return false if an error occurs
+        }
+    }
+
     public function GetIdProduct()
     {
         global $conn;
@@ -330,6 +373,49 @@ class admin
             return false; // Trả về false nếu có lỗi xảy ra
         }
     }
+    public function UpdateSize(SizeSanPham $sp)
+    {
+        global $conn;
+        try {
+            $sql = "UPDATE `sizesanpham` 
+                SET `Size`=:size,
+                    `Trongluong`=:trongluong,
+                    `Soluong`=:soluong,
+                    `GiaGocSP`=:giagoc,
+                    `GiaSale`=:giasale,
+                    `GiaBan`=:giaban 
+                WHERE `MaSP` = :idPro";
+            $stmt = $conn->prepare($sql);
+
+            // Lấy giá trị các thuộc tính từ đối tượng SizeSanPham
+            $idPro = $sp->getMaSP();
+
+            $size = $sp->getSize();
+            $trongluong = $sp->getTrongluong();
+            $soluong = $sp->getSoluong();
+            $giagoc = $sp->getGiaGocSP();
+            $giasale = $sp->getGiaSale();
+            $giaban = $sp->getGiaBan();
+
+            // Bind các giá trị vào các tham số của câu lệnh SQL
+            $stmt->bindParam(':idPro', $idPro);
+            $stmt->bindParam(':size', $size);
+            $stmt->bindParam(':trongluong', $trongluong);
+            $stmt->bindParam(':soluong', $soluong);
+            $stmt->bindParam(':giagoc', $giagoc);
+            $stmt->bindParam(':giasale', $giasale);
+            $stmt->bindParam(':giaban', $giaban);
+
+            // Thực thi câu lệnh SQL
+            $stmt->execute();
+
+            return true; // Trả về true khi cập nhật thành công
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi xảy ra
+        }
+    }
+
     public function InsertHinhAnh(SizeHinhAnh $sp)
     {
         global $conn;
@@ -344,6 +430,28 @@ class admin
             $stmt->bindParam(':DuongDan',  $duongdan);
             $stmt->execute();
             return true; // Trả về true khi chèn thành công
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi xảy ra
+        }
+    }
+    public function UpdateHinhAnh($idproduct, $duongdan)
+    {
+        global $conn;
+        try {
+            $sql = "UPDATE `hinhanhsanpham` SET `DuongDan`=:DuongDan WHERE `MaSP` = :MaSP";
+            $stmt = $conn->prepare($sql);
+
+
+
+            // Bind các giá trị vào các tham số của câu lệnh SQL
+            $stmt->bindParam(':MaSP', $idproduct);
+            $stmt->bindParam(':DuongDan', $duongdan);
+
+            // Thực thi câu lệnh SQL
+            $stmt->execute();
+
+            return true; // Trả về true khi cập nhật thành công
         } catch (PDOException $e) {
             echo "Lỗi truy vấn: " . $e->getMessage();
             return false; // Trả về false nếu có lỗi xảy ra
