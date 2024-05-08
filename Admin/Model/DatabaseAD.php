@@ -130,6 +130,48 @@ class admin
             return false;
         }
     }
+    public function DeleteDanhMuc($idDanhMuc)
+    {
+        global $conn;
+        try {
+            $sql = "DELETE FROM `categoryproduct` WHERE `idDanhmuc` = :idDanhMuc";
+            $stmt = $conn->prepare($sql);
+
+            // Bind the parameter value
+            $stmt->bindParam(':idDanhMuc', $idDanhMuc);
+
+            // Execute the query
+            $result = $stmt->execute();
+
+            // Return the result of the execution
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Return false if there's an error
+        }
+    }
+    public function InsertDanhMuc($idDanhMuc, $tenDanhMuc)
+    {
+        global $conn;
+        try {
+            $sql = "INSERT INTO `categoryproduct`(`idDanhmuc`, `tenDanhmuc`) VALUES (:idDanhMuc,:TenDanhMuc)";
+            $stmt = $conn->prepare($sql);
+
+
+            // Bind các giá trị vào các tham số của câu lệnh SQL
+            $stmt->bindParam(':idDanhMuc', $idDanhMuc);
+            $stmt->bindParam(':TenDanhMuc', $tenDanhMuc);
+
+
+            // Thực thi câu lệnh SQL
+            $stmt->execute();
+
+            return true; // Trả về true khi chèn thành công
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi xảy ra
+        }
+    }
     public function loadCategoryBaiViet()
     {
         global $conn;
@@ -378,19 +420,18 @@ class admin
         global $conn;
         try {
             $sql = "UPDATE `sizesanpham` 
-                SET `Size`=:size,
-                    `Trongluong`=:trongluong,
+                SET `Trongluong`=:trongluong,
                     `Soluong`=:soluong,
                     `GiaGocSP`=:giagoc,
                     `GiaSale`=:giasale,
                     `GiaBan`=:giaban 
-                WHERE `MaSP` = :idPro";
+                WHERE `MaSP` = :idPro and Size= :size";
             $stmt = $conn->prepare($sql);
 
             // Lấy giá trị các thuộc tính từ đối tượng SizeSanPham
             $idPro = $sp->getMaSP();
-
             $size = $sp->getSize();
+
             $trongluong = $sp->getTrongluong();
             $soluong = $sp->getSoluong();
             $giagoc = $sp->getGiaGocSP();
@@ -400,6 +441,7 @@ class admin
             // Bind các giá trị vào các tham số của câu lệnh SQL
             $stmt->bindParam(':idPro', $idPro);
             $stmt->bindParam(':size', $size);
+
             $stmt->bindParam(':trongluong', $trongluong);
             $stmt->bindParam(':soluong', $soluong);
             $stmt->bindParam(':giagoc', $giagoc);
@@ -415,6 +457,50 @@ class admin
             return false; // Trả về false nếu có lỗi xảy ra
         }
     }
+    public function GetCountSize($idproduct)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT COUNT(*) as Count FROM `sizesanpham` WHERE MaSP = :MaSP";
+            $stmt = $conn->prepare($sql);
+
+            // Bind the parameter value
+            $stmt->bindParam(':MaSP', $idproduct);
+
+            // Execute the query
+            $stmt->execute();
+
+            // Fetch the result
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Return the count of images
+            return $result['Count'];
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Return false if there's an error
+        }
+    }
+    public function DeleteSizeHinh($idproduct)
+    {
+        global $conn;
+        try {
+            $sql = "DELETE FROM `hinhanhsanpham` WHERE MaSP = :MaSP";
+            $stmt = $conn->prepare($sql);
+
+            // Bind the parameter value
+            $stmt->bindParam(':MaSP', $idproduct);
+
+            // Execute the query
+            $result = $stmt->execute();
+
+            // Return the result of the execution
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Return false if there's an error
+        }
+    }
+
 
     public function InsertHinhAnh(SizeHinhAnh $sp)
     {
@@ -435,11 +521,11 @@ class admin
             return false; // Trả về false nếu có lỗi xảy ra
         }
     }
-    public function UpdateHinhAnh($idproduct, $duongdan)
+    public function UpdateHinhAnh($idproduct, $duongdan, $idHinh)
     {
         global $conn;
         try {
-            $sql = "UPDATE `hinhanhsanpham` SET `DuongDan`=:DuongDan WHERE `MaSP` = :MaSP";
+            $sql = "UPDATE `hinhanhsanpham` SET `DuongDan`=:DuongDan WHERE `MaSP` = :MaSP and IdHinhAnh = :IDHinhAnh";
             $stmt = $conn->prepare($sql);
 
 
@@ -447,6 +533,7 @@ class admin
             // Bind các giá trị vào các tham số của câu lệnh SQL
             $stmt->bindParam(':MaSP', $idproduct);
             $stmt->bindParam(':DuongDan', $duongdan);
+            $stmt->bindParam(':IDHinhAnh', $idHinh);
 
             // Thực thi câu lệnh SQL
             $stmt->execute();
@@ -455,6 +542,29 @@ class admin
         } catch (PDOException $e) {
             echo "Lỗi truy vấn: " . $e->getMessage();
             return false; // Trả về false nếu có lỗi xảy ra
+        }
+    }
+    public function GetCountHinhAnh($idproduct)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT COUNT(*) as Count FROM `hinhanhsanpham` WHERE MaSP = :MaSP";
+            $stmt = $conn->prepare($sql);
+
+            // Bind the parameter value
+            $stmt->bindParam(':MaSP', $idproduct);
+
+            // Execute the query
+            $stmt->execute();
+
+            // Fetch the result
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Return the count of images
+            return $result['Count'];
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Return false if there's an error
         }
     }
 }

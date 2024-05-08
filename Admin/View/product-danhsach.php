@@ -1,7 +1,7 @@
 <?php
 $productAD = new admin();
 
-if(isset($_GET['alert'])) {
+if (isset($_GET['alert'])) {
     echo "<div class='alert'>" . htmlspecialchars($_GET['alert']) . "</div>";
 }
 
@@ -9,7 +9,7 @@ if(isset($_GET['alert'])) {
 if (isset($_GET['search'])) {
     $search_query = $_GET['search'];
     if ($search_query != "") {
-       
+
         $productList = $productAD->loadProductbyName($search_query);
     } else {
         $productList = $productAD->loadProductAdmin();
@@ -76,7 +76,7 @@ if (isset($_GET['search'])) {
                                         <div class="table-action-buttons">
                                             <a class="view button button-box button-xs button-primary" href="?View=product-chitiet&idProduct=<?php echo $itemProduct['idProduct']; ?>"><i class="zmdi zmdi-more"></i></a>
                                             <a class="edit button button-box button-xs button-info" href="?View=product-sua&idProduct=<?php echo $itemProduct['idProduct']; ?>"><i class="zmdi zmdi-edit"></i></a>
-                                            <a class="delete button button-box button-xs button-danger"  href="?View=product-xuly&idProduct=<?php echo $itemProduct['idProduct']; ?>"><i class="zmdi zmdi-delete"></i></a>
+                                            <a class="delete button button-box button-xs button-danger" href="?View=product-xuly&idProductXoa=<?php echo $itemProduct['idProduct']; ?>" onclick="return confirmDelete();"><i class="zmdi zmdi-delete"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -91,3 +91,18 @@ if (isset($_GET['search'])) {
         </div>
 
     </div><!-- Content Body End -->
+
+
+    <script>
+        function confirmDelete() {
+
+            // Hiển thị hộp thoại xác nhận
+            var result = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
+
+            if (result) {
+                return true;
+            }
+            // Ngược lại, không thực hiện xóa
+            return false;
+        }
+    </script>

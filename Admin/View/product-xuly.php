@@ -121,9 +121,9 @@ if (isset($_POST['addproduct'])) {
 }
 
 // Kiểm tra xem idProduct đã được truyền qua URL chưa
-if (isset($_GET['idProduct'])) {
+if (isset($_GET['idProductXoa'])) {
     // Lấy giá trị idProduct từ URL
-    $idProduct = $_GET['idProduct'];
+    $idProduct = $_GET['idProductXoa'];
     $ad = new admin();
     $check_xoa = $ad->Delete($idProduct);
     if ($check_xoa) {
@@ -250,26 +250,104 @@ if (isset($_POST['editproduct'])) {
     $sp = new Product($cate, $name_product, $image, $totalSoLuong, $motaNgan, $motaDai, $currentDate);
     $alert_update = $ad->UpdateProduct($sp, $idProduct);
 
+    $check = false;
     if ($alert_update) {
+        $check = true;
+        $Count_Size = $ad->GetCountSize($idProduct);
+        $list_size_detail = $ad->loadProductSizeSanPham($idProduct);
 
-        $check = false;
+
+        // foreach ($selected_sizes as $size => $info) {
+        //     $soluongItem =   $info['SoLuong'];
+        //     $giabanItem =  $info['GiaBan'];
+        //     $trongluongItem = $info['TrongLuong'];
+        //     $giagocItem = $info['GiaGoc'];
+        //     $giasaleItem = $info['GiaSale'];
+
+        //     $sizeObject = new SizeSanPham($idProduct, $size, $trongluongItem, $soluongItem, $giagocItem, $giasaleItem, $giabanItem);
+        //     $alert_insert_Size = $ad->UpdateSize($sizeObject);
+        //     if ($alert_insert_Size) {
+        //         $check = true;
+        //     }
+        // }
+
+        // Cập nhật size hiện có và thêm size mới nếu có
         foreach ($selected_sizes as $size => $info) {
-            $soluongItem =   $info['SoLuong'];
-            $giabanItem =  $info['GiaBan'];
-            $trongluongItem = $info['TrongLuong'];
-            $giagocItem = $info['GiaGoc'];
-            $giasaleItem = $info['GiaSale'];
+            // Nếu có size hiện có, hãy cập nhật chúng
+            if ($Count_Size > 0) {
+                // Tìm kiếm size hiện có trong danh sách các size
+                $existingSizeIndex = array_search($size, array_column($list_size_detail, 'Size'));
 
-            $sizeObject = new SizeSanPham($idProduct, $size, $trongluongItem, $soluongItem, $giagocItem, $giasaleItem, $giabanItem);
-            $alert_insert_Size = $ad->UpdateSize($sizeObject);
-            if ($alert_insert_Size) {
-                $check = true;
+                // Nếu size tồn tại, cập nhật nó
+                if ($existingSizeIndex !== false) {
+                    $size_Item = $list_size_detail[$existingSizeIndex];
+                    $sizeObject = new SizeSanPham(
+                        $size_Item['MaSP'],
+                        $size_Item['Size'],
+                        $info['TrongLuong'],
+                        $info['SoLuong'],
+                        $info['GiaGoc'],
+                        $info['GiaSale'],
+                        $info['GiaBan']
+                    );
+                    $ad->UpdateSize($sizeObject);
+                } else {
+                    // Nếu size không tồn tại, thêm nó vào
+                    $sizeObject = new SizeSanPham(
+                        $idProduct,
+                        $size,
+                        $info['TrongLuong'],
+                        $info['SoLuong'],
+                        $info['GiaGoc'],
+                        $info['GiaSale'],
+                        $info['GiaBan']
+                    );
+                    $alert_insert_Size = $ad->InsertSize($sizeObject);
+                }
+            } else {
+                $sizeObject = new SizeSanPham(
+                    $idProduct,
+                    $size,
+                    $info['TrongLuong'],
+                    $info['SoLuong'],
+                    $info['GiaGoc'],
+                    $info['GiaSale'],
+                    $info['GiaBan']
+                );
+                $alert_insert_Size = $ad->InsertSize($sizeObject);
             }
         }
 
-        foreach ($imagesList as $name) {        
-            $item = $ad->UpdateHinhAnh($idProduct,$name);
+
+       // $Count_HinhAnh = $ad->GetCountHinhAnh($idProduct);
+        $list_image_detail = $ad->loadProductHinhAnhChiTiet($idProduct);
+
+        $count_image_list = count($imagesList);
+        // foreach ($imagesList as $index => $imageUrl) {
+
+        //     if ($index < $Count_HinhAnh) {
+
+        //         $image_item = $list_image_detail[$index];
+        //         $ad->UpdateHinhAnh($idProduct, $imageUrl, $image_item['IdHinhAnh']);
+        //     } else {
+        //         $number = $ad->GetIdSizeHinhAnh();
+        //         $sizeHinhAnh = new SizeHinhAnh($number + 1, $idProduct, $imageUrl);
+        //         $item = $ad->InsertHinhAnh($sizeHinhAnh);
+        //     }
+        // }
+        // Xóa hết các hình ảnh hiện có của sản phẩm
+        $ad->DeleteSizeHinh($idProduct);
+
+        // Thêm các hình ảnh mới từ mảng $imagesList
+        for ($index = 0; $index < $count_image_list; $index++) {
+            $imageUrl = $imagesList[$index];
+            $number = $ad->GetIdSizeHinhAnh();
+            $sizeHinhAnh = new SizeHinhAnh($number + 1, $idProduct, $imageUrl);
+            $item = $ad->InsertHinhAnh($sizeHinhAnh);
         }
+
+
+
         if ($check) {
             $alert = "Cập nhật thành công !";
             echo "<script> alert('$alert');  </script>";

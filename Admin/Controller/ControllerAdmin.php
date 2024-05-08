@@ -55,6 +55,9 @@
             case 'categorySanPham':
                 include('View/categorySanPham.php');
                 break;
+            case 'categorySanPham-xuly':
+                include('View/categorySanPham-xuly.php');
+                break;
             case 'categoryBlog':
                 include('View/categoryBaiviet.php');
                 break;
