@@ -15,7 +15,7 @@
                     <ul class="side-header-sub-menu">
 
                         <li><a href="?View=order"><span>Đơn hàng</span></a></li>
-                        <!-- <li><a href="order-details.php"><span>Order Details</span></a></li> -->
+                        <li><a href="?View=order-cacel"><span>Đơn hàng đã hủy</span></a></li>
 
                     </ul>
                 </li>

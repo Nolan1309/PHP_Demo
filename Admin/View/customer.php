@@ -32,13 +32,14 @@ if (isset($_GET['search'])) {
                 <h3>Danh sách tài khoản</span></h3>
             </div>
         </div><!-- Page Heading End -->
-
+        <div class="col-12 col-lg-auto mb-20">
+            <div class="page-heading">
+                <a href="?View=customer-them" class="btn btn-success">Thêm tài khoản</a>
+            </div>
+        </div>
     </div><!-- Page Headings End -->
 
     <div class="row mbn-30">
-
-
-
         <!-- Invoice List Start -->
         <div class="col-12 mb-30">
             <div class="table-responsive">
@@ -79,7 +80,7 @@ if (isset($_GET['search'])) {
                                     <div class="table-action-buttons">
                                         <a class="view button button-box button-xs button-primary" href="#"><i class="zmdi zmdi-more"></i></a>
                                         <a class="edit button button-box button-xs button-info" href="#"><i class="zmdi zmdi-edit"></i></a>
-                                        <a class="delete button button-box button-xs button-danger" href="#"><i class="zmdi zmdi-delete"></i></a>
+                                        <a class="delete button button-box button-xs button-danger" href="#" data-id="<?php echo $customerItem["AccountID"]; ?>"><i class="zmdi zmdi-delete"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -94,3 +95,44 @@ if (isset($_GET['search'])) {
     </div>
 
 </div><!-- Content Body End -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    var idDanhMuc;
+    var dataOtherValue;
+    $('.delete').click(function() {
+
+        var result = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
+
+        if (result) {
+            idAccount = $(this).data('id');
+            $.ajax({
+                url: 'View/customer-xuly.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    idAccount: idAccount,
+                    action: 'delete'
+                },
+
+                success: function(response) {
+
+                    var data = response;
+
+                    var message = data.message;
+                    var status = data.status;
+                    alert(message);
+                    if (status == 'success') {
+                        location.reload();
+                    }
+                },
+                error: function(xhr, status, error) {
+
+                    console.error(xhr.responseText);
+                }
+            });
+        } else {
+            return;
+        }
+    });
+</script>

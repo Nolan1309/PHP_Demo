@@ -1,18 +1,19 @@
 
 <?php
 // Thông tin kết nối đến cơ sở dữ liệu MySQL
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "shophoa";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "shophoa";
 
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    // Xử lý các lỗi kết nối hoặc truy vấn
-    echo "Lỗi kết nối: " . $e->getMessage();
-}
+// try {
+//     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+//     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// } catch (PDOException $e) {
+//     // Xử lý các lỗi kết nối hoặc truy vấn
+//     echo "Lỗi kết nối: " . $e->getMessage();
+// }
+include '../../Config/config.php';
 class admin_ver2
 {
     public function DeleteDanhMuc($idDanhMuc)

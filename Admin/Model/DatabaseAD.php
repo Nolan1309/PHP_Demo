@@ -17,11 +17,96 @@ class admin
             return false;
         }
     }
+    public function loadOrderAdminByMaDonhang($iddonhang)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM `donhang` WHERE  `TrangThai` = 'Chưa duyệt' and `MaDH` = $iddonhang ";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+    public function loadOrderAdminByMaDonhang_Cancel($iddonhang)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM `donhang` WHERE  `TrangThai` = 'Đã hủy' and `MaDH` = $iddonhang ";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+    public function loadOrderDetailAdmin($iddonhang)
+    {
+        global $conn;
+        try {
+            $sql = " select ctdh.MaSP,p.TenSP,p.AnhSP,ctdh.soluong, ctdh.dongia, ctdh.thanhtien from chitietdonhang ctdh INNER JOIN product p on p.idProduct = ctdh.MaSP where ctdh.madonhang = $iddonhang";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+    public function loadOrderAdminCancel()
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM `donhang` WHERE `TrangThai` = 'Đã hủy' ";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
     public function loadOrderAdminActive()
     {
         global $conn;
         try {
             $sql = "SELECT * FROM `donhang` WHERE `TrangThai` = 'Đã xác nhận'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+    public function loadOrderAdminActiveByMaDonhang($iddonhang)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM `donhang` WHERE  `TrangThai` = 'Đã xác nhận' and `MaDH` = $iddonhang ";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+    public function loadOrderDetailAdminActive($iddonhang)
+    {
+        global $conn;
+        try {
+            $sql = "
+            select ctdh.MaSP,p.TenSP,ctdh.soluong, ctdh.dongia, ctdh.thanhtien from chitietdonhang ctdh INNER JOIN product p on p.idProduct = ctdh.MaSP where ctdh.madonhang = $iddonhang";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

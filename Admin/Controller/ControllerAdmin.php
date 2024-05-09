@@ -25,6 +25,12 @@
             case 'order':
                 include('View/order-list.php');
                 break;
+            case 'order-cacel':
+                include('View/order-list-cacel.php');
+                break;
+            case 'order-detail':
+                include('View/order-details.php');
+                break;
             case 'home':
                 include('View/home.php');
                 break;
@@ -49,9 +55,19 @@
             case 'invoice':
                 include('View/invoice-list.php');
                 break;
+            case 'invoice-detail':
+                include('View/invoice-details.php');
+                break;
             case 'customer':
                 include('View/customer.php');
                 break;
+            case 'customer-them':
+                include('View/customer-them.php');
+                break;
+            case 'customer-xuly':
+                include('View/customer-xuly.php');
+                break;
+
             case 'categorySanPham':
                 include('View/categorySanPham.php');
                 break;
