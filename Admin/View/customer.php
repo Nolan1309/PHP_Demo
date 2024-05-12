@@ -78,8 +78,8 @@ if (isset($_GET['search'])) {
 
                                 <td class="action h4">
                                     <div class="table-action-buttons">
-                                        <a class="view button button-box button-xs button-primary" href="#"><i class="zmdi zmdi-more"></i></a>
-                                        <a class="edit button button-box button-xs button-info" href="#"><i class="zmdi zmdi-edit"></i></a>
+                                       
+                                        <a class="edit button button-box button-xs button-info" href="?View=customer-sua&idAccount=<?php echo $customerItem["AccountID"]; ?>"><i class="zmdi zmdi-edit"></i></a>
                                         <a class="delete button button-box button-xs button-danger" href="#" data-id="<?php echo $customerItem["AccountID"]; ?>"><i class="zmdi zmdi-delete"></i></a>
                                     </div>
                                 </td>
@@ -98,11 +98,11 @@ if (isset($_GET['search'])) {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    var idDanhMuc;
+    var idAccount;
     var dataOtherValue;
     $('.delete').click(function() {
 
-        var result = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
+        var result = confirm("Bạn có chắc chắn muốn xóa tài khoản này không?");
 
         if (result) {
             idAccount = $(this).data('id');

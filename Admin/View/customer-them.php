@@ -56,7 +56,7 @@
                 <option value="2">User</option>
             </select>
 
-            <input type="submit" value="Thêm tài khoản">
+            <input type="submit" name="addAccount" value="Thêm tài khoản">
         </form>
     </div>
 
@@ -128,10 +128,6 @@
                 alert('Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm ít nhất một chữ cái hoa, một chữ cái thường, một số và một ký tự đặc biệt.');
                 return false;
             }
-
-
-
-            // Nếu tất cả các trường đã được điền đầy đủ, thì submit form
             form.submit();
         });
     });

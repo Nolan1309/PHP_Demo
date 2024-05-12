@@ -35,7 +35,7 @@ class admin
     {
         global $conn;
         try {
-            $sql = "SELECT * FROM `donhang` WHERE  `TrangThai` = 'Đã hủy' and `MaDH` = $iddonhang ";
+            $sql = "SELECT * FROM `donhang` WHERE `MaDH` = $iddonhang ";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -277,6 +277,20 @@ class admin
         global $conn;
         try {
             $sql = "SELECT * FROM `donhang` WHERE `TrangThai` = 'Chưa duyệt' and TENKH LIKE N'%$tentimkiem%'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+    public function loadOrderAdminByNameKH_Cancel($tentimkiem)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM `donhang` WHERE `TrangThai` = 'Đã hủy' and TENKH LIKE N'%$tentimkiem%'";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -650,6 +664,116 @@ class admin
         } catch (PDOException $e) {
             echo "Lỗi truy vấn: " . $e->getMessage();
             return false; // Return false if there's an error
+        }
+    }
+
+
+
+    // ACCOUNT ADMIN
+    public function GetAccount($idaccount)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM `Account` WHERE AccountID = $idaccount";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi
+        }
+    }
+
+    //HOME_ DOANH THU
+    public function DoanhThu()
+    {
+        global $conn;
+        try {
+            $sql = "SELECT SUM(TongTien) as TongDoanhThu
+            FROM DonHang
+            WHERE TrangThai = 'Đã xác nhận'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result["TongDoanhThu"];
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi
+        }
+    }
+    public function SoLuongTonKho()
+    {
+        global $conn;
+        try {
+            $sql = "SELECT SUM(Soluong) AS TongSoLuongConLai
+            FROM SizeSanPham;";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result["TongSoLuongConLai"];
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi
+        }
+    }
+    public function TongDonHangChuaXacNhan()
+    {
+        global $conn;
+        try {
+            $sql = "SELECT COUNT(*) AS TongDonHangChuaXacNhan
+            FROM DonHang
+            WHERE TrangThai = 'Chưa duyệt';";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result["TongDonHangChuaXacNhan"];
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi
+        }
+    }
+    public function DoanhThuNgay()
+    {
+        global $conn;
+        try {
+            $sql = "SELECT SUM(TongTien) AS TongTienTatCa
+            FROM DonHang
+            WHERE TrangThai = 'Đã xác nhận' AND NgayDat = CURDATE();";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result["TongTienTatCa"];
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi
+        }
+    }
+    public function GetKhachHangOrder()
+    {
+        global $conn;
+        try {
+            $sql = "SELECT 
+                        cdh.madonhang AS idDonHang,
+                        dh.TenKH,
+                        dh.TrangThai,
+                        SUM(cdh.soluong) AS SoLuongSanPham,
+                        SUM(cdh.thanhtien) AS TongTienDonHang
+                    FROM 
+                        ChiTietDonHang cdh
+                    JOIN 
+                        DonHang dh ON cdh.madonhang = dh.MaDH
+                    WHERE 
+                        dh.TrangThai = 'Chưa duyệt'
+                    GROUP BY 
+                        cdh.madonhang, dh.TenKH, dh.TrangThai;";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi
         }
     }
 }

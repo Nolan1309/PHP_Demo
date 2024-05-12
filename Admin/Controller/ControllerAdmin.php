@@ -64,6 +64,9 @@
             case 'customer-them':
                 include('View/customer-them.php');
                 break;
+            case 'customer-sua':
+                include('View/customer-sua.php');
+                break;
             case 'customer-xuly':
                 include('View/customer-xuly.php');
                 break;

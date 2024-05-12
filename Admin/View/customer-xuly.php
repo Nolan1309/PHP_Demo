@@ -63,15 +63,29 @@ class admin_ver2
         }
     }
 
-    public function GetIdDanhMuc()
+    public function CheckAccount($email)
     {
         global $conn;
         try {
-            $sql = "SELECT MAX(`idDanhmuc`) as Max FROM `categoryproduct` ";
+            $sql = "SELECT COUNT(*) AS count FROM Account WHERE Email = '$email'";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $result['Max']; // Trả về giá trị lớn nhất của cột idProduct
+            return $result['count'];
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false; // Trả về false nếu có lỗi
+        }
+    }
+    public function CheckPhone($phone)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT COUNT(*) AS count FROM Account WHERE Phone = '$phone'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['count'];
         } catch (PDOException $e) {
             echo "Lỗi truy vấn: " . $e->getMessage();
             return false; // Trả về false nếu có lỗi
@@ -85,12 +99,12 @@ class admin_ver2
 
 <?php
 if (isset($_POST['idAccount']) && isset($_POST['action']) && $_POST['action'] == 'delete') {
-    $idDanhMuc = $_POST['idAccount'];
+    $idAccount = $_POST['idAccount'];
     $ad = new admin_ver2();
-    $ad->DeleteAccount($idDanhMuc);
+    $ad->DeleteAccount($idAccount);
     $response = array(
         'status' => 'success',
-        'message' => 'Xóa danh mục thành công.'
+        'message' => 'Xóa tài khoản thành công.'
     );
     $json_response = json_encode($response);
     echo $json_response;
@@ -100,23 +114,33 @@ if (isset($_POST['idAccount']) && isset($_POST['action']) && $_POST['action'] ==
 ?>
 <?php
 // Kiểm tra xem form đã được gửi chưa
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['phone']) && !empty($_POST['fullname']) && isset($_POST['level'])) {
+
     // Nhận dữ liệu từ form
+    $ad = new admin_ver2();
     $email = $_POST['email'];
     $password = $_POST['password'];
     $phone = $_POST['phone'];
     $fullname = $_POST['fullname'];
     $level = $_POST['level'];
 
-    $ad = new admin_ver2();
+    $checkAc = $ad->CheckAccount($email);
+    if ($checkAc > 0) {
+        $alert = "Tài khoản đã tồn tại !";
+        echo "<script> alert('$alert');  </script>";
+        echo "<script>window.location.href='?View=customer-them';</script>";
+    }
+    $checkPhone = $ad->CheckPhone($phone);
+    if ($checkPhone > 0) {
+        $alert = "Số điện thoại đã liên kết tài khoản !";
+        echo "<script> alert('$alert');  </script>";
+        echo "<script>window.location.href='?View=customer-them';</script>";
+    }
     $check = $ad->InsertAccount($email, $password, $phone, $fullname, $level);
     if ($check) {
         $alert = "Thêm tài khoản thành công !";
         echo "<script> alert('$alert');  </script>";
         echo "<script>window.location.href='?View=customer';</script>";
     }
-} else {
-
-    echo "Phương thức không được hỗ trợ!";
-}
+} 
 ?>

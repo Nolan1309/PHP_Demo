@@ -7,7 +7,7 @@ if (isset($_GET['search'])) {
     $search_query = $_GET['search'];
     if ($search_query != "") {
 
-        $listOrder = $orderAD->loadOrderAdminByNameKH($search_query);
+        $listOrder = $orderAD->loadOrderAdminByNameKH_Cancel($search_query);
     } else {
         $listOrder = $orderAD->loadOrderAdminCancel();
     }

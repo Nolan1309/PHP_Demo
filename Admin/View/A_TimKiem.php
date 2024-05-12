@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 case 'order-cacel':
                     echo '<script>window.location.href = "?View=order-cacel&search=' . urlencode($search_query) . '";</script>';
                     break;
-
                 case 'home':
                     include('View/home.php');
                     break;
@@ -43,6 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             switch ($luutruGiaoDien) {
                 case 'account':
                     include('View/my-account.php');
+                    break;
+                case 'order':
+                    echo '<script>window.location.href = "?View=order";</script>';
                     break;
                 case 'order-cacel':
                     echo '<script>window.location.href = "?View=order-cacel";</script>';
