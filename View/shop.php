@@ -1,32 +1,5 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zxx">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="meta description">
-    <title>Floda - Flower eCommerce Bootstrap 4 Template</title>
-
-    <!--=== Favicon ===-->
-    <link rel="shortcut icon" href="../Library/assets/img/favicon.ico" type="image/x-icon" />
-
-    <!-- Google fonts include -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,900%7CYesteryear" rel="stylesheet">
-
-    <!-- All Vendor & plugins CSS include -->
-    <link href="../Library/assets/css/vendor.css" rel="stylesheet">
-    <!-- Main Style CSS -->
-    <link href="../Library/assets/css/style.css" rel="stylesheet">
-
-    <!--[if lt IE 9]>
-<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
-
-</head>
 <?php
-// Truy vấn để lấy tổng số bản ghi
+
 $total_records_query = "SELECT COUNT(*) AS total FROM product";
 $total_records_result = $conn->query($total_records_query);
 $total_records_row = $total_records_result->fetch(PDO::FETCH_ASSOC);
@@ -49,6 +22,65 @@ if (isset($_GET['page']) && is_numeric($_GET['page'])) {
 $offset = ($currentPage - 1) * $itemsPerPage;
 
 ?>
+<style>
+    .ctrl-filter div {
+        width: 100%;
+        line-height: 20px;
+        padding-bottom: 7px;
+        font-size: 14px;
+    }
+
+    .ctrl-filter a {
+        background: #EEE;
+        font-size: 13px;
+        padding: 2px 12px;
+        line-height: 20px;
+        display: inline-block;
+        position: relative;
+        color: #242424;
+        border-radius: 12px;
+    }
+
+    .range-price .input-group {
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+
+    .range-price .input-group input {
+        flex: 1 1 0%;
+        width: calc(50% - 4px);
+        height: 30px;
+        padding: 0px 8px;
+        background: #FFF;
+        border-radius: 4px;
+        text-align: left;
+        border: 1px solid #b8b8b8;
+        outline: 0px;
+        font-size: 13px;
+    }
+
+    .range-price .input-group>span {
+        width: 7px;
+        height: 1px;
+        font-size: 0px;
+        display: inline-block;
+        background: #9a9a9a;
+        margin: 0px 4px;
+        vertical-align: middle;
+    }
+
+    .range-price .search_filter {
+        background: #ffffff;
+        border: 1px solid #0d5cb6;
+        font-size: 12px;
+        color: #0d5cb6;
+        padding: 5px 15px;
+        width: 99px;
+        border-radius: 4px;
+        text-align: center;
+    }
+</style>
 
 <body>
     <!-- main wrapper start -->
@@ -62,7 +94,7 @@ $offset = ($currentPage - 1) * $itemsPerPage;
                             <nav aria-label="breadcrumb">
                                 <h1>shop</h1>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="../index.php"><i class="fa fa-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="?View=home"><i class="fa fa-home"></i></a></li>
                                     <li class="breadcrumb-item active" aria-current="page">shop</li>
                                 </ul>
                             </nav>
@@ -94,23 +126,19 @@ $offset = ($currentPage - 1) * $itemsPerPage;
                                                 <a href="?View=shop-cateproduct&id=<?php echo $row['idDanhmuc']; ?>"><?php echo $row['tenDanhmuc']; ?></a>
                                             </li>
                                         <?php } ?>
-
-
-
-
                                     </ul>
                                 </div>
                             </div>
                             <!-- single sidebar end -->
 
                             <!-- Sidabar lọc sản phẩm start -->
-                            <div class="sidebar-single">
+                            <!-- <div class="sidebar-single">
                                 <h3 class="sidebar-title">Giá</h3>
                                 <div class="sidebar-body">
                                     <div class="price-range-wrap">
                                         <div class="price-range" data-min="0" data-max="1000"></div>
                                         <div class="range-slider">
-                                            <form action="#" class="d-flex align-items-center justify-content-between">
+                                            <form id="price-filter-form" action="" class="d-flex align-items-center justify-content-between">
                                                 <div class="price-input">
                                                     <label for="amount">Từ: </label>
                                                     <input type="text" id="amount">
@@ -120,132 +148,22 @@ $offset = ($currentPage - 1) * $itemsPerPage;
                                         </div>
                                     </div>
                                 </div>
+                            </div> -->
+                            <!-- single sidebar end -->
+                            <div class="ctrl-filter range-price">
+                                <h3 class="sidebar-title" style="margin-bottom:15px;"> Mức giá</h3>
+                                <!-- <h2></h2> -->
+                                <div><a class="active" href="javascript:void(0);" onclick="ChangePrice(this, '0','10000000000')">Tất cả</a></div>
+                                <div><a href="javascript:void(0);" onclick="ChangePrice(this, '0','250000')">Dưới 250.000</a></div>
+                                <div><a href="javascript:void(0);" onclick="ChangePrice(this, '250000','500000')">Từ 250.000 đến 500.000</a></div>
+                                <div><a href="javascript:void(0);" onclick="ChangePrice(this, '500000','1000000')">Từ 500.000 đến 1.000.000</a></div>
+                                <div><a href="javascript:void(0);" onclick="ChangePrice(this, '1000000','2000000')">Từ 1.000.000 đến 2.000.000</a></div>
+                                <div><a href="javascript:void(0);" onclick="ChangePrice(this, '2000000','20000000')">Trên 2.000.000</a></div>
+                                <div class="small-text">Range price</div>
+                                <div class="input-group"><input id="low-price" pattern="[0-9]*" placeholder="Min" onkeypress="HandleSetPrice(event)" value="0"><span>-</span><input id="high-price" pattern="[0-9]*" placeholder="Max" onkeypress="HandleSetPrice(event)" value="0"></div><a href="javascript:void(0);" class="search_filter" onclick="SetPrice();">Apply</a>
                             </div>
-                            <!-- single sidebar end -->
 
-                            <!-- single sidebar start -->
-                            <!-- <div class="sidebar-single">
-                                <h3 class="sidebar-title">brand</h3>
-                                <div class="sidebar-body">
-                                    <ul class="checkbox-container categories-list">
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">Studio (3)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                <label class="custom-control-label" for="customCheck3">Hastech (4)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                                <label class="custom-control-label" for="customCheck4">Quickiin (15)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                <label class="custom-control-label" for="customCheck1">Graphic corner (10)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                                <label class="custom-control-label" for="customCheck5">devItems (12)</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> -->
-                            <!-- single sidebar end -->
 
-                            <!-- single sidebar start -->
-                            <!-- <div class="sidebar-single">
-                                <h3 class="sidebar-title">color</h3>
-                                <div class="sidebar-body">
-                                    <ul class="checkbox-container categories-list">
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck12">
-                                                <label class="custom-control-label" for="customCheck12">black (20)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck13">
-                                                <label class="custom-control-label" for="customCheck13">red (6)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck14">
-                                                <label class="custom-control-label" for="customCheck14">blue (8)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck11">
-                                                <label class="custom-control-label" for="customCheck11">green (5)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck15">
-                                                <label class="custom-control-label" for="customCheck15">pink (4)</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> -->
-                            <!-- single sidebar end -->
-
-                            <!-- single sidebar start -->
-                            <!-- <div class="sidebar-single">
-                                <h3 class="sidebar-title">size</h3>
-                                <div class="sidebar-body">
-                                    <ul class="checkbox-container categories-list">
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck111">
-                                                <label class="custom-control-label" for="customCheck111">S (4)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck222">
-                                                <label class="custom-control-label" for="customCheck222">M (5)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck333">
-                                                <label class="custom-control-label" for="customCheck333">L (7)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck444">
-                                                <label class="custom-control-label" for="customCheck444">XL (3)</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> -->
-                            <!-- single sidebar end -->
-
-                            <!-- single sidebar start -->
-                            <!-- <div class="sidebar-banner">
-                                <div class="img-container">
-                                    <a href="#">
-                                        <img src="../Library/assets/img/banner/sidebar-banner.jpg" alt="">
-                                    </a>
-                                </div>
-                            </div> -->
-                            <!-- single sidebar end -->
                         </aside>
                     </div>
                     <!-- sidebar area end -->
@@ -267,22 +185,7 @@ $offset = ($currentPage - 1) * $itemsPerPage;
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-5 col-md-6 order-1 order-md-2">
-                                        <div class="top-bar-right">
-                                            <div class="product-short">
-                                                <p>Sort By : </p>
-                                                <select class="nice-select" name="sortby">
-                                                    <option value="trending">Relevance</option>
-                                                    <option value="sales">Name (A - Z)</option>
-                                                    <option value="sales">Name (Z - A)</option>
-                                                    <option value="rating">Price (Low &gt; High)</option>
-                                                    <option value="date">Rating (Lowest)</option>
-                                                    <option value="price-asc">Model (A - Z)</option>
-                                                    <option value="price-asc">Model (Z - A)</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   
                                 </div>
                             </div>
                             <!-- shop product top wrap start -->
@@ -313,11 +216,11 @@ $offset = ($currentPage - 1) * $itemsPerPage;
                                                         </div>
                                                     <?php } ?>
                                                 </div>
-                                                <div class="button-group">
+                                                <!-- <div class="button-group">
 
                                                     <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip" data-placement="left" title="Quick View"><i class="lnr lnr-magnifier"></i></span></a>
 
-                                                </div>
+                                                </div> -->
                                             </figure>
                                             <div class="product-caption">
                                                 <p class="product-name">
@@ -402,11 +305,11 @@ $offset = ($currentPage - 1) * $itemsPerPage;
                                                 <p>
                                                     <?php echo $row['MoTaSanPham']; ?>
                                                 </p>
-                                                <div class="button-group-list">
-                                                    <!-- <a class="btn-big" href="cart.php" data-toggle="tooltip" title="Add to Cart"><i class="lnr lnr-cart"></i>Add to Cart</a> -->
+                                                <!-- <div class="button-group-list">
+                                                    <a class="btn-big" href="cart.php" data-toggle="tooltip" title="Add to Cart"><i class="lnr lnr-cart"></i>Add to Cart</a>
                                                     <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip" title="Quick View"><i class="lnr lnr-magnifier"></i></span></a>
 
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <!-- product list item end -->
@@ -440,30 +343,74 @@ $offset = ($currentPage - 1) * $itemsPerPage;
         </div>
         <!-- page main wrapper end -->
     </main>
-    <!-- main wrapper end -->
 
-
-    <?php
-    // include '../Layout/footer.php';
-    // include '../Layout/quickview.php';
-    // include '../Layout/offcanvas_search.php';
-    // include '../Layout/offcanvas_minicart.php';
-    ?>
-
-
-
-    <!-- Scroll to top start -->
     <div class="scroll-top not-visible">
         <i class="fa fa-angle-up"></i>
     </div>
-    <!-- Scroll to Top End -->
+    <script>
+        function ChangePrice(element, low, high) {
+            var links = document.querySelectorAll('.ctrl-filter.range-price a');
+            links.forEach(function(link) {
+                link.classList.remove('active');
+            });
+            element.classList.add('active');
 
-    <!-- All vendor & plugins & active js include here -->
-    <!--All Vendor Js -->
+
+            // Gọi hàm xử lý dựa trên khoảng giá
+            FilterByPrice(low, high);
+        }
+
+       
+
+        // Hàm xử lý khi người dùng nhấp vào nút 'Apply'
+        function SetPrice() {
+            // Lấy giá trị từ các trường nhập liệu
+            var lowPrice = document.getElementById('low-price').value;
+            var highPrice = document.getElementById('high-price').value;
+
+            var priceRange = lowPrice + '-' + highPrice;
+            FilterByPrice(lowPrice, highPrice);
+        }
+
+
+        function HandleSetPrice(event) {
+
+            if (event.keyCode === 13) {
+                SetPrice(); // Nếu có, gọi hàm xử lý khi nhấn nút 'Apply'
+            }
+        }
+
+        // Hàm xử lý để lọc sản phẩm theo khoảng giá
+        function FilterByPrice(low, high) {
+            $.ajax({
+                url: 'Model/shop-xuly.php', // Sửa tên tệp thành 'shop-xuly.php'
+
+                type: 'POST',
+                data: {
+                    low: low,
+                    high: high // Sửa thành 'high'
+                },
+                success: function(response) {
+
+                    if (response) {
+                        // console.log('Yêu cầu đã được xử lý thành công');
+                        window.location.href = response.trim(); // Chuyển hướng trang
+                    } else {
+                        console.log('Lỗi xảy ra khi xử lý yêu cầu');
+                        // Xử lý lỗi hoặc hiển thị thông báo cho người dùng
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Lỗi khi gửi yêu cầu:', error);
+                }
+
+            });
+        }
+    </script>
+
+
 
     <script src="../Library/assets/js/vendor.js"></script>
     <!-- Active Js -->
     <script src="../Library/assets/js/active.js"></script>
 </body>
-
-</html>

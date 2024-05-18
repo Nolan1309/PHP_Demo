@@ -8,24 +8,10 @@
                 header('location:View/login.php');
                 break;
             case 'sign-up':
-                // include('View/register.php');
+
                 header('location: View/register.php');
                 break;
-                // case 'sign_up':
-                //     $name = $_POST['name'];
-                //     $email = $_POST['email'];
-                //     $sdt = $_POST['sdt'];
-                //     $address = $_POST['address'];
-                //     $password = $_POST['password'];
-                //     $newuser = newUser($name, $email, $sdt, $address, $password);
-                //     if ($newuser) {
-                //         header('location:View/login.php');
-                //         break;
-                //     } else {
-                //         // include('View/register.php');
-                //         header('location: View/register.php');
-                //         break;
-                //     }
+
             case 'logout':
                 if (isset($_SESSION['laclac_khachang'])) {
                     unset($_SESSION['laclac_khachang']);
@@ -35,6 +21,10 @@
             case 'account':
                 include('View/my-account.php');
                 break;
+            case 'my-account-xuly':
+                include('Controller/my-account-xuly.php');
+                break;
+
             case 'contact':
                 include_once('View/contact-us.php');
                 break;
@@ -48,6 +38,10 @@
             case 'shop':
                 include('View/shop.php');
                 break;
+            case 'shop-fill':
+                include('View/shop-product_fill.php');
+                break;
+
             case 'shop-cateproduct':
                 include('View/shop-cateproduct.php');
                 break;
@@ -95,7 +89,6 @@
 
             default:
                 include('View/home.php');
-
                 break;
         }
     } else {

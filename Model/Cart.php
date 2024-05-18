@@ -1,3 +1,8 @@
+<?php
+
+
+?>
+
 <div class="row">
     <div class="col-12">
         <center><img class="loading-cart" src="../Library/images/loader.gif" alt=""></center>
@@ -5,6 +10,10 @@
 </div>
 
 <?php
+
+
+
+
 if (isset($_POST['addtocart'])) {
     $idproduct = $_POST['idproduct'];
     $soluong = $_POST['soluong'];
@@ -83,11 +92,35 @@ if (isset($_POST['delete_cart_product'])) {
 
 
 
-// require 'webroot/PHPMailer/src/Exception.php';
-// require 'webroot/PHPMailer/src/PHPMailer.php';
-// require 'webroot/PHPMailer/src/SMTP.php';
-// use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\Exception;
+
+
+
+// require '.././webroot/PHPMailer/src/Exception.php';
+// require '.././webroot/PHPMailer/src/PHPMailer.php';
+// require '.././webroot/PHPMailer/src/SMTP.php';
+
+
+
+
+// require ".././webroot/PHPMailer_Mail/src/PHPMailer.php";
+// require ".././webroot/PHPMailer_Mail/src/Exception.php";
+// require ".././webroot/PHPMailer_Mail/src/OAuth.php";
+// require ".././webroot/PHPMailer_Mail/src/POP3.php";
+// require ".././webroot/PHPMailer_Mail/src/SMTP.php";
+
+$absolute_path = realpath('C:/xampp/htdocs/PHP/WebDemo/webroot/PHPMailer/src/PHPMailer.php');
+$absolute_path1 = realpath('C:/xampp/htdocs/PHP/WebDemo/webroot/PHPMailer/src/Exception.php');
+
+$absolute_path4 = realpath('C:/xampp/htdocs/PHP/WebDemo/webroot/PHPMailer/src/SMTP.php');
+
+
+require_once $absolute_path;
+require_once $absolute_path1;
+require_once $absolute_path4;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 if (isset($_POST['order'])) {
     $fName = $_POST['f_name']; //người nhận hàng
     $lName = $_POST['l_name']; //người nhận hàng
@@ -105,7 +138,7 @@ if (isset($_POST['order'])) {
 
 
 
-    $tenKH = $fName." ".$lName;
+    $tenKH = $fName . " " . $lName;
     // $dcnn=$_POST['address']; //địa chỉ người nhận
     // $sdtnn=$_POST['phone'];//số điện thoại người nhận
 
@@ -115,11 +148,11 @@ if (isset($_POST['order'])) {
     $tientamtinh = $_POST['tamtinh'];
     $tiengiamgia = $_POST['tiengiamgia'];
     $tt = $_POST['tongtien'];
-   
+
 
     $talbe = '';
     foreach ($_SESSION['cart_product'] as $item_cart) {
-        $product = productCart($item_cart['MaSP']);
+        $product = productCart_item($item_cart['MaSP']);
         $number = str_replace(',', '', $item_cart['DonGia']);
         $dongia = number_format($number * $item_cart['SoLuong']);
         $talbe = $talbe . '
@@ -130,70 +163,123 @@ if (isset($_POST['order'])) {
         </tr>';
     }
     $message = '
-        <html>
-        <head>
-        <title>Đơn hàng của bạn</title>
-        <style>
-            table {
-                font-family: Arial, sans-serif;
-                font-size: 14px;
-                background-color: #f7f7f7;
-                width: 100%;
-            }
-            th {
-                background-color: #333;
-                color: #fff;
-                font-weight: bold;
-                padding: 10px;
-            }
-            table, th, td {
-                border: 1px solid black;
-                border-collapse: collapse;
-            }
-            th, td {
-                text-align: center;
-                padding: 10px;
-            }
-        </style>
-        </head>
-        <body>
-        <p>Cảm ơn bạn đã đặt hàng.</p>
-        <table>
-        <tr>
-        <th>Sản phẩm</th>
-        <th>Số lượng</th>
-        <th>Giá</th>
-        </tr>' . $talbe . '
-        </table>
-        <p>Tổng cộng: ' . $tt . ' đ</p>
-        </body>
-        </html>';
-      echo  $makh,$tenKH,$phone,$tinh,$quan,$phuong,$diachicuthe,$note,$tientamtinh,$tiengiamgia,$tt;
+    <html>
+    <head>
+      <title>Đơn hàng của bạn</title>
+      <style>
+        table {
+          font-family: Arial, sans-serif;
+          font-size: 14px;
+          background-color: #f7f7f7;
+          width: 100%;
+        }
+        th {
+          background-color: #333;
+          color: #fff;
+          font-weight: bold;
+          padding: 10px;
+        }
+        table,
+        th,
+        td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        th,
+        td {
+          text-align: center;
+          padding: 10px;
+        }
+      </style>
+    </head>
+    <body>
+      
+      <table>  
+          <tr>
+              <td style="padding-top:20px;padding-bottom:10px;padding-left:10px;padding-right:10px">
+                  <div style="font-size:17px;margin-bottom:15px"><strong>Cảm ơn quý khách đã đặt hàng tại <a href="http://localhost/PHP/WebDemo/" style="color:#336e51;text-decoration:none" target="_blank" data-saferedirecturl="">ShopHoa</a></strong></div>
+                  
+              </td>
+          </tr>
+          <tr>
+              <td style="padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px">
+                  <table style="border-style:solid;border-color:#f0f2f0;border-width:1px;width:100%" cellpadding="0" cellspacing="0">
+                      <tbody><tr>
+                          <td style="background-color:#f0f2f0;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px;font-weight:700"><div>THÔNG TIN ĐƠN HÀNG #24051554367 (15:27:22 GMT+07:00 Ngày 15 tháng 5 năm 2024)</div></td>
+                      </tr>
+                      <tr>
+                          <td style="padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px">
+                              <p style="text-align: left;"><b>Địa chỉ giao hàng</b></p>
+                              <div style="margin-bottom:20px;text-align: left;"> Sơn Thanh<br>
+                                  11/66 Nguyễn Hữu Tiến, Phường Tây Thạnh, Quận Tân Phú, Hồ Chí Minh<br>
+                                  Tel: 0365683018
+                              </div>
+                              <!-- <div style="text-align: left;">  -->
+                                  <!-- <b>Phương thức thanh toán:</b>  Thanh toán khi nhận hàng (COD) <br> -->
+                                  <!-- <b>Thời gian giao hàng dự kiến:</b> 15/05/2024 15:27 - 15/05/2024 18:00 (Không tính CN &amp; ngày lễ, không bao gồm sản phẩm đặt hàng trước)<br> -->
+                                  <!-- <b>Phí vận chuyển:</b> 10,000 ₫ </div> -->
+                          </td>
+                      </tr>
+                  </tbody></table>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <table>
+          
+                      <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                      </tr>
+                      ' . $talbe . ' 
+                    </table>
+              </td>
+          </tr>
+      </table>
+  
+   
+     
+       <p>Tổng cộng: ' . $tt . ' đ</p> 
+    </body>
+  </html>
+  ';
+    //   echo  $makh,$tenKH,$phone,$tinh,$quan,$phuong,$diachicuthe,$note,$tientamtinh,$tiengiamgia,$tt;
 
-    $order=order_product($makh,$tenKH,$phone,$tinh,$quan,$phuong,$diachicuthe,$note,$tientamtinh,$tiengiamgia,$tt);
-    header('location:?View=order-complete');
-    // if($order){
-    //     $mail = new PHPMailer(true);
-    //     $mail->isSMTP();                                            // sử dụng SMTP
-    //     $mail->Host       = 'smtp.gmail.com';                       // SMTP server
-    //     $mail->SMTPAuth   = true;                                   // bật chế độ xác thực SMTP
-    //     $mail->Username   = 'tungndps21572@fpt.edu.vn';        // tài khoản đăng nhập SMTP
-    //     $mail->Password   = 'tfwtuuqfwzpgparm';                         // mật khẩu đăng nhập SMTP
-    //     $mail->SMTPSecure = 'tls';                                  // giao thức bảo mật TLS
-    //     $mail->Port       = 587;
-    //     $mail->setFrom('tungndps21572@fpt.edu.vn', 'Shop Hoa');          // địa chỉ email và tên người gửi
-    //     $mail->addAddress($kh['Email'], $kh['TenKH']); // địa chỉ email và tên người nhận
-    //     $mail->Subject = ' Shop Hoa - DON HANG CUA BAN';                               // tiêu đề email
-    //     $mail->Body    = $message;     
-    //     $mail->isHTML(true);                            // định dạng email dưới dạng HTML
-    //     // $mail->addAttachment('path/to/file.pdf');       // đính kèm tập tin PDF
-    //     if ($mail->send()) {
-    //         header('location:?view=order-complete');
-    //     } else {
-    //         echo 'Email could not be sent';
-    //         echo 'Mailer Error: ' . $mail->ErrorInfo;
-    //     } 
-    // }
+    $order = order_product($makh, $email, $tenKH, $phone, $tinh, $quan, $phuong, $diachicuthe, $ghichu, $tientamtinh, $tiengiamgia, $tt);
+    // header('location:?View=order-complete');
+
+
+    if ($order) {
+        $mail = new PHPMailer(true);
+        $mail->SMTPDebug = 20;
+        $mail->isSMTP();                                            // sử dụng SMTP
+        $mail->Host       = 'smtp.gmail.com';                       // SMTP server
+        $mail->SMTPAuth   = true;                                   // bật chế độ xác thực SMTP
+        $mail->Username   = 'tranfc911@gmail.com';        // tài khoản đăng nhập SMTP
+        $mail->Password   = 'nqczusexrbohzumn';                         // mật khẩu đăng nhập SMTP
+        $mail->SMTPSecure = 'tls';                                  // giao thức bảo mật TLS
+        $mail->Port       = 587;
+
+        $mail->setFrom('tranfc911@gmail.com', 'Shop HOA');          // địa chỉ email và tên người gửi
+        $encoded_name = mb_convert_encoding($tenKH, 'UTF-8', 'UTF-8');
+        $mail->addAddress($email, $encoded_name);
+        // địa chỉ email và tên người nhận
+        // $mail->addAttachment('path/to/file.pdf');       // đính kèm tập tin PDF
+        $mail->isHTML(true);                            // định dạng email dưới dạng HTML
+
+
+
+        $mail->Subject = 'Welcome to ShopHoa Floda , my friend !';                               // tiêu đề email
+        $mail->Body    = $message;
+
+        if ($mail->send()) {
+            header('location:?View=order-complete');
+        } else {
+            echo 'Email could not be sent';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        }
+    }
 }
 
 

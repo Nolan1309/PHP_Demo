@@ -1,12 +1,13 @@
+<!-- Bắt đầu slide trình chiếu event -->
 <main>
-    <!-- Bắt đầu slide trình chiếu event -->
+  
     <section class="slider-area">
         <div class="hero-slider-active slick-arrow-style slick-arrow-style_hero slick-dot-style">
             <?php
             $object = new Database();
             $bannerData = $object->loadBanner();
-
             $bannerList = array();
+           
             foreach ($bannerData as $data) {
                 $cateProduct = new CategoryProduct();
                 $cateProduct->idDanhmuc = $data['idDanhMucProduct'];
@@ -16,11 +17,10 @@
                 $banner->tenBanner = $data['tenBanner'];
                 $banner->idDanhMucProduct = $cateProduct;
                 $banner->idBanner = $data['idBanner'];
-               
+
 
                 $bannerList[] = $banner;
             }
-
             foreach ($bannerList as $row) {
             ?>
                 <div class="hero-single-slide ">
@@ -43,23 +43,9 @@
                     </div>
                 </div>
             <?php } ?>
-            <!-- <div class="hero-single-slide">
-                <div class="hero-slider-item_3 bg-img" data-bg="./Library/assets/img/slider/home3-slide2.jpg">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="hero-slider-content slide-2">
-                                    <span>valentine gift</span>
-                                    <h1>Fresh Your Mind</h1>
-                                    <h2>& Feeling love</h2>
-                                    <a href="./View/shop.php" class="btn-hero">shop now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
+
+
     </section>
     <!-- Kết thúc slide trình chiếu event -->
 
@@ -126,36 +112,6 @@
     <?php
     $product = $object->loadProduct_5_SanPham();
 
-    // $productList = array();
-    // foreach ($product as $data) {
-    //     $size = new SizeSanPham();
-    //     $size->GiaGocSP = $data['GiaGoc'];
-    //     $size->GiaSale = $data['GiaSale'];
-    //     $size->GiaBan = $data['GiaBan'];
-
-    //     $reviewP = new ReviewProduct();
-    //     $cateP = new CategoryProduct();
-    //     $cateP->idDanhmuc =  $data['MaDanhMuc'];
-
-    //     $cateProduct->idDanhmuc = $data['idDanhMucProduct'];
-
-    //     $productItem = new Product(); // Create a Banner object
-    //     $productItem->idProduct = $data['MaSanPham'];
-    //     $productItem->danhmuc = $cateP;
-    //     $productItem->TenSP = $data['TenSanPham'];
-    //     $productItem->AnhSP = $data['AnhSanPham'];
-
-
-    //     $productItem->idProduct = $data['GiaGoc'];
-
-    //     $productItem->idProduct = $data['MaSanPham'];
-
-    //     $productItem->idProduct = $data['MaSanPham'];
-
-
-
-    //     $bannerList[] = $banner;
-    // }
     ?>
     <!-- Top 5 product trending month -->
     <section class="deals-area section-space pt-0">
@@ -192,11 +148,7 @@
                                                 </div>
                                             <?php } ?>
                                         </div>
-                                        <div class="button-group">
 
-                                            <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip" data-placement="left" title="Quick View"><i class="lnr lnr-magnifier"></i></span></a>
-                                            <!-- <a href="./View/cart.php" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="lnr lnr-cart"></i></a> -->
-                                        </div>
                                     </figure>
                                     <div class="product-caption product-deal-content">
                                         <p class="product-name">
@@ -206,7 +158,7 @@
                                         </p>
                                         <div class="ratings d-flex mb-1">
                                             <?php
-                                           
+
                                             $stars = '';
                                             if ($row['DiemDanhGia'] >= 5) {
                                                 $stars = '5';
@@ -261,7 +213,7 @@
             </div>
         </div>
     </section>
-   
+
     <!-- Sản phẩm show nhanh - có thể mở rộng -->
     <section class="our-product section-space">
         <div class="container">
@@ -301,11 +253,11 @@
                                         </div>
                                     <?php } ?>
                                 </div>
-                                <div class="button-group">
+                                <!-- <div class="button-group">
 
                                     <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip" data-placement="left" title="Quick View"><i class="lnr lnr-magnifier"></i></span></a>
-                                    <!-- <a href="./View/cart.php" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="lnr lnr-cart"></i></a> -->
-                                </div>
+                                    <a href="./View/cart.php" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="lnr lnr-cart"></i></a>
+                                </div> -->
                             </figure>
                             <div class="product-caption">
                                 <p class="product-name">
@@ -343,7 +295,7 @@
                 <!-- product single item end -->
                 <div class="col-12">
                     <div class="view-more-btn">
-                        <a class="btn-hero btn-load-more" href="./View/shop.php">view more products</a>
+                        <a class="btn-hero btn-load-more" href="?View=shop">view more products</a>
                     </div>
                 </div>
             </div>
@@ -393,11 +345,11 @@
                                             </div>
                                         <?php } ?>
                                     </div>
-                                    <div class="button-group">
+                                    <!-- <div class="button-group">
 
                                         <a href="#" data-toggle="modal" data-target="#quick_view"><span data-toggle="tooltip" data-placement="left" title="Quick View"><i class="lnr lnr-magnifier"></i></span></a>
-                                        <!-- <a href="./View/cart.php" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="lnr lnr-cart"></i></a> -->
-                                    </div>
+                                        <a href="./View/cart.php" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="lnr lnr-cart"></i></a>
+                                    </div> -->
                                 </figure>
                                 <div class="product-caption">
                                     <p class="product-name">
@@ -449,5 +401,4 @@
         </div>
     </div>
     <!-- Instagram Feed Area End -->
-
 </main>

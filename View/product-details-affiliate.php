@@ -1,139 +1,117 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zxx">
+<style>
+    .size-buttons {
+        margin-bottom: 10px;
+    }
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="meta description">
-    <title>Floda - Flower eCommerce Bootstrap 4 Template</title>
+    .btn-size {
+        display: inline-block;
+        padding: 5px 20px;
+        border: 2px solid #d9534f;
+        border-radius: 4px;
+        background-color: transparent;
+        color: #d9534f;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
 
-    <!--=== Favicon ===-->
-    <link rel="shortcut icon" href="../Library/assets/img/favicon.ico" type="image/x-icon" />
+    .btn-size:hover {
+        background-color: #d9534f;
+        color: #fff;
+    }
 
-    <!-- Google fonts include -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,900%7CYesteryear" rel="stylesheet">
+    .btn-clicked {
+        background-color: #d9534f;
+        color: #fff;
+    }
 
-    <!-- All Vendor & plugins CSS include -->
-    <link href="../Library/assets/css/vendor.css" rel="stylesheet">
-    <!-- Main Style CSS -->
-    <link href="../Library/assets/css/style.css" rel="stylesheet">
+    .soluongP {
+        color: #333;
+        font-size: 16px;
+        font-weight: normal;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
 
-    <style>
-        .size-buttons {
-            margin-bottom: 10px;
-        }
+    .price {
+        color: #ff0000;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
 
-        .btn-size {
-            display: inline-block;
-            padding: 5px 20px;
-            border: 2px solid #d9534f;
-            border-radius: 4px;
-            background-color: transparent;
-            color: #d9534f;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    .btn-size-input {
+        display: none;
+    }
 
-        .btn-size:hover {
-            background-color: #d9534f;
-            color: #fff;
-        }
+    .btn-size-label {
+        display: inline-block;
+        padding: 5px 20px;
+        border: 2px solid #d9534f;
+        border-radius: 4px;
+        background-color: transparent;
+        color: #d9534f;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
 
-        .btn-clicked {
-            background-color: #d9534f;
-            color: #fff;
-        }
+    .btn-size-label:hover {
+        background-color: #d9534f;
+        color: #fff;
+    }
 
-        .soluongP {
-            color: #333;
-            font-size: 16px;
-            font-weight: normal;
-            margin-top: 5px;
-            margin-bottom: 10px;
-        }
+    .btn-size-input:checked+.btn-size-label {
+        background-color: #d9534f;
+        color: #fff;
+    }
 
-        .price {
-            color: #ff0000;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 5px;
-            margin-bottom: 20px;
-        }
+    .input-group-btn .btn {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        font-size: 16px;
+        border: none;
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
 
-        .btn-size-input {
-            display: none;
-        }
+    .input-group-btn .btn:hover {
+        background-color: #e0e0e0;
 
-        .btn-size-label {
-            display: inline-block;
-            padding: 5px 20px;
-            border: 2px solid #d9534f;
-            border-radius: 4px;
-            background-color: transparent;
-            color: #d9534f;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    }
 
-        .btn-size-label:hover {
-            background-color: #d9534f;
-            color: #fff;
-        }
+    .input-group-btn .btn:active {
+        background-color: #d0d0d0;
 
-        .btn-size-input:checked+.btn-size-label {
-            background-color: #d9534f;
-            color: #fff;
-        }
+    }
 
-        .input-group-btn .btn {
-            width: 30px;
-            height: 30px;
-            padding: 0;
-            font-size: 16px;
-            border: none;
-            background-color: #f0f0f0;
-            cursor: pointer;
-        }
+    /* CSS */
+    .input-group {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        margin-bottom: 10px;
+    }
 
-        .input-group-btn .btn:hover {
-            background-color: #e0e0e0;
+    .quantity-left-minus,
+    .quantity-right-plus {
+        padding: 5px 10px;
+        /* Điều chỉnh kích thước của nút */
+    }
 
-        }
+    .ml-1 {
+        margin-left: 5px;
+        /* Khoảng cách giữa các nút */
+    }
 
-        .input-group-btn .btn:active {
-            background-color: #d0d0d0;
-
-        }
-
-        /* CSS */
-        .input-group {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .quantity-left-minus,
-        .quantity-right-plus {
-            padding: 5px 10px;
-            /* Điều chỉnh kích thước của nút */
-        }
-
-        .ml-1 {
-            margin-left: 5px;
-            /* Khoảng cách giữa các nút */
-        }
-
-        .form-control.input-number {
-            width: 100px !important;
-            text-align: center;
-            flex: none;
-        }
-    </style>
-</head>
+    .form-control.input-number {
+        width: 100px !important;
+        text-align: center;
+        flex: none;
+    }
+</style>
 
 <body>
     <!-- main wrapper start -->
@@ -147,7 +125,7 @@
                             <nav aria-label="breadcrumb">
                                 <h1>product details</h1>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="../index.php"><i class="fa fa-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="?View=home"><i class="fa fa-home"></i></a></li>
                                     <li class="breadcrumb-item active" aria-current="page">product details affiliate</li>
                                 </ul>
                             </nav>
@@ -239,7 +217,7 @@
                                                     <div class="availability1" style="display: inline;">
                                                         <p id="soluongP_<?php echo $sizeC; ?>" class="soluongP">Số lượng : <?php echo $firstSize["Soluong"]; ?></p>
                                                         <p id="price_<?php echo $sizeC; ?>" class="price">Giá bán : <?php echo number_format($firstSize["GiaBan"]); ?></p>
-                                                       
+
                                                     </div>
                                                     <?php foreach ($sizeproduct as $size) {
                                                         $sizeC = $size["Size"];
@@ -248,7 +226,7 @@
 
                                                         <div class="availability" style="display: inline;">
                                                             <p id="soluongP_<?php echo $sizeC; ?>" class="soluongP" style="display: none;">Số lượng : <?php echo $size["Soluong"]; ?></p>
-                                                            <p id="price_<?php echo $sizeC; ?>" class="price" style="display: none;">Giá bán : <?php echo number_format($size["GiaBan"]); ?></p>                                                        
+                                                            <p id="price_<?php echo $sizeC; ?>" class="price" style="display: none;">Giá bán : <?php echo number_format($size["GiaBan"]); ?></p>
                                                             <input type="hidden" name="dongiaban_<?php echo $sizeC; ?>" value="<?php echo number_format($size["GiaBan"]); ?>">
 
                                                         </div>
@@ -279,7 +257,7 @@
                                                     ?>
                                                 </p>
                                                 <input type="hidden" name="idproduct" value='<?php echo $idproduct; ?>'>
-                                              
+
                                                 <div class="quantity-cart-box d-flex align-items-center">
                                                     <div class="action_link">
                                                         <!-- <a class="btn btn-cart2" href="?View=cart?id=<?php //echo $idproduct; 

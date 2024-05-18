@@ -1,4 +1,19 @@
 <!-- Start Header Area -->
+<style>
+    input#woocommerce-product-search-field-0 {
+        /* padding: 9px; */
+        padding: 10px 0px 10px 5px;
+        font-size: 16px;
+        border: none;
+        border-right: 1px solid #eee;
+    }
+
+    .flex-col.flex-grow {
+        border: 1px solid #eee;
+        border-radius: 3px;
+
+    }
+</style>
 <header class="header-area">
     <!-- main header start -->
     <div class="main-header d-none d-lg-block">
@@ -8,7 +23,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <div class="welcome-message">
-                            <p>Welcome to Floda online store</p>
+                            <p>Welcome to ShopHoa!</p>
                         </div>
                     </div>
 
@@ -23,16 +38,16 @@
                     <!-- start logo area -->
                     <div class="col-lg-3">
                         <div class="logo">
-                            <a href="../index.php">
+                            <a href="?View=home">
 
-                                <img src="../Library/assets/img/logo/logo.png" alt="">
+                                <img src="Library/assets/img/logo/logo.png" alt="logo" style="margin-left: 100px;">
 
                             </a>
                         </div>
                     </div>
                     <!-- start logo area -->
                     <!-- main menu area start -->
-                    <div class="col-lg-6 position-static">
+                    <div class="col-lg-5 position-static">
                         <div class="main-menu-area">
                             <div class="main-menu">
                                 <!-- main menu navbar start -->
@@ -56,7 +71,7 @@
 
                                             </ul>
                                         </li>
-                                        <li><a href="?View=blog-grid-full-width">Blog</a>
+                                        <!-- <li><a href="?View=blog-grid-full-width">Blog</a> -->
 
                                         </li>
                                         <li><a href="?View=contact">Contact us</a></li>
@@ -68,14 +83,29 @@
                     </div>
                     <!-- main menu area end -->
                     <!--Bắt đầu giỏ hàng -->
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <div class="header-configure-wrapper">
                             <div class="header-configure-area">
-                                <ul class="nav justify-content-end">
+                                <ul class="nav justify-content-end" style="align-items: center;">
                                     <li>
-                                        <a href="#" class="offcanvas-btn">
-                                            <i class="lnr lnr-magnifier"></i>
-                                        </a>
+
+                                        <div class="header-search-form-wrapper">
+                                            <div class="searchform-wrapper ux-search-box relative is-normal">
+                                                <form role="search" method="get" class="searchform" action="#" data-gtm-form-interact-id="0" style="width:250px;">
+                                                    <div class="flex-row relative">
+                                                        <div class="flex-col flex-grow">
+
+                                                            <input type="search" id="woocommerce-product-search-field-0" class="search-field mb-0" placeholder="Tìm tên hoa bạn muốn..." value="" name="s" autocomplete="off" data-gtm-form-interact-field-id="0" style="width:90%;">
+                                                            <input type="hidden" name="post_type" value="product">
+                                                            <button type="submit" value="Tìm kiếm" class="submit-button secondary" style="width:20px;height:20px;" aria-label="Submit">
+                                                                <i class="lnr lnr-magnifier"></i></button>
+                                                        </div>
+
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
                                     </li>
                                     <li class="user-hover">
                                         <a href="?View=account">
@@ -112,13 +142,13 @@
                 <div class="col-12">
                     <div class="mobile-main-header">
                         <div class="mobile-logo">
-                            <a href="../index.php">
-                                <img src="../Library/assets/img/logo/logo.png" alt="Brand Logo">
+                            <a href="?View=home">
+                                <img src="Library/assets/img/logo/logo.png" alt="Brand Logo">
                             </a>
                         </div>
                         <div class="mobile-menu-toggler">
                             <div class="mini-cart-wrap">
-                                <a href="../View/cart.php">
+                                <a href="?View=cart">
                                     <i class="lnr lnr-cart"></i>
                                 </a>
                             </div>
@@ -152,6 +182,7 @@
                     <input type="text" placeholder="Search Here...">
                     <button class="search-btn"><i class="lnr lnr-magnifier"></i></button>
                 </form>
+
             </div>
             <!-- search box end -->
 
@@ -166,15 +197,15 @@
 
                         </li>
 
-                        <li class="menu-item-has-children "><a href="./View/shop.php">shop</a>
+                        <li class="menu-item-has-children "><a href="?View=shop">shop</a>
                             <ul class="dropdown">
 
                                 <?php
-                              
+
                                 foreach ($menushop as $row) {
                                 ?>
                                     <li class="menu-item-has-children">
-                                    <a href="?View=shop-cateproduct&id=<?php echo $row['idDanhmuc']; ?>"><?php echo $row['tenDanhmuc']; ?></a>
+                                        <a href="?View=shop-cateproduct&id=<?php echo $row['idDanhmuc']; ?>"><?php echo $row['tenDanhmuc']; ?></a>
                                     </li>
                                 <?php } ?>
 
@@ -182,7 +213,7 @@
 
                             </ul>
                         </li>
-                        <li class="menu-item-has-children "><a href="./View/blog-grid-full-width.php">Blog</a></li>
+                        <!-- <li class="menu-item-has-children "><a href="./View/blog-grid-full-width.php">Blog</a></li> -->
                         <li><a href="?View=contact">Contact us</a></li>
                     </ul>
                 </nav>
@@ -200,9 +231,9 @@
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="myaccount">
-                                <a class="dropdown-item" href="?View=account">my account</a>
-                                <a class="dropdown-item" href="?View=login"> login</a>
-                                <a class="dropdown-item" href="?View=sign-up">register</a>
+                                <a class="dropdown-item" href="?View=account">My Account</a>
+                                <a class="dropdown-item" href="?View=login"> Login</a>
+                                <a class="dropdown-item" href="?View=sign-up">Register</a>
                             </div>
                         </div>
                     </li>

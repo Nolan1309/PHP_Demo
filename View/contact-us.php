@@ -36,7 +36,7 @@
                             <nav aria-label="breadcrumb">
                                 <h1>contact</h1>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="../index.php"><i class="fa fa-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="?View=home"><i class="fa fa-home"></i></a></li>
                                     <li class="breadcrumb-item active" aria-current="page">contact</li>
                                 </ul>
                             </nav>
@@ -103,9 +103,6 @@
         <!-- contact area end -->
     </main>
     <!-- main wrapper end -->
-
-
-
     <!-- Scroll to top start -->
     <div class="scroll-top not-visible">
         <i class="fa fa-angle-up"></i>

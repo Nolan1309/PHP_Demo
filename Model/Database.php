@@ -329,15 +329,13 @@ class Database
     //Load banner cho index
     public function loadBanner()
     {
-
-        $banners = array();
         global $conn;
         try {
-            $sqlBanner = "SELECT * FROM `banner` LIMIT 2";
+            $sqlBanner = "SELECT * FROM banner LIMIT 5";
             $stmt = $conn->prepare($sqlBanner);
             $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo "Lỗi truy vấn: " . $e->getMessage();
             return false;
@@ -518,6 +516,64 @@ class Database
             return false;
         }
     }
+    function loadAccountDetail($idaccount)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT * FROM `account` WHERE `AccountID` = :accountID and Level = 2";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':accountID', $idaccount, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    //Lọc giá
+    function locgia($fromPrice, $toPrice, $from, $to)
+    {
+        global $conn;
+        try {
+            $sql = "SELECT 
+            P.idProduct AS MaSanPham,
+            P.idDanhmuc AS MaDanhMuc,
+            P.TenSP AS TenSanPham,
+            P.AnhSP AS AnhSanPham,
+            P.MotaDai AS MoTaSanPham,
+            S.GiaGocSP AS GiaGoc,
+            S.GiaSale AS GiaSale,
+            S.GiaBan AS GiaBan,
+            AVG(D.DiemDanhGia) AS DiemDanhGia
+            FROM 
+                Product P
+            JOIN 
+                SizeSanPham S ON P.idProduct = S.MaSP
+            LEFT JOIN 
+                DanhGiaSanPham D ON P.idProduct = D.MaSP
+                WHERE S.GiaBan BETWEEN :fromPrice AND :toPrice
+            GROUP BY 
+                P.idProduct
+                LIMIT :limitFrom, :limitTo;
+            ";
+            $stmt = $conn->prepare($sql);
+            // Ràng buộc các tham số
+            $stmt->bindParam(':fromPrice', $fromPrice, PDO::PARAM_STR);
+            $stmt->bindParam(':toPrice', $toPrice, PDO::PARAM_STR);
+            $stmt->bindParam(':limitFrom', $from, PDO::PARAM_INT);
+            $stmt->bindParam(':limitTo', $to, PDO::PARAM_INT);
+
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return false;
+        }
+    }
 }
 
 
@@ -554,6 +610,22 @@ function productCart($idProduct)
         return false;
     }
 }
+function productCart_item($idProduct)
+{
+    global $conn;
+    try {
+        $sql = "SELECT * FROM `product` WHERE idProduct = :idProduct";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':idProduct', $idProduct, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    } catch (PDOException $e) {
+        // Ghi log hoặc xử lý ngoại lệ một cách thích hợp
+        // Ví dụ: throw new Exception("Lỗi truy vấn: " . $e->getMessage());
+        return false;
+    }
+}
 function newUser($name, $email, $sdt, $password)
 {
     global $conn;
@@ -579,7 +651,7 @@ function newUser($name, $email, $sdt, $password)
         return false;
     }
 }
-function order_product( $makh , $tenkh , $sdtKH , $tinh,$quan,$huyen,$duong , $noteKH ,$tienhang , $tiengiam , $tongtien)
+function order_product($makh,  $email, $tenkh, $sdtKH, $tinh, $quan, $huyen, $duong, $noteKH, $tienhang, $tiengiam, $tongtien)
 {
     global $conn;
 
@@ -587,16 +659,16 @@ function order_product( $makh , $tenkh , $sdtKH , $tinh,$quan,$huyen,$duong , $n
         // Start a transaction
         $conn->beginTransaction();
         // Insert invoice
-        $sql = "INSERT INTO `donhang`(`MaKH`, `TenKH`, `SDTKH`, `tinhKH`, `quanKH`, `huyenKH`, `duongKH`, `noteKH`, `NgayDat`, `NgayGiao`, `TrangThai`, `TienHang`, `TienGiam`, `TongTien`) 
-          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-       // $sql = "INSERT INTO `hoadon`(`MaKH`, `TinhTrang`, `TongTien`) VALUES (?, 'chưa duyệt', ?)";
+        $sql = "INSERT INTO `donhang`(`MaKH`,`Email`, `TenKH`, `SDTKH`, `tinhKH`, `quanKH`, `huyenKH`, `duongKH`, `noteKH`, `NgayDat`, `NgayGiao`, `TrangThai`, `TienHang`, `TienGiam`, `TongTien`) 
+          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        // $sql = "INSERT INTO `hoadon`(`MaKH`, `TinhTrang`, `TongTien`) VALUES (?, 'chưa duyệt', ?)";
         $stmt = $conn->prepare($sql);
         // $stmt->execute([$makh, $tt]);
-        $trangThai= "Chưa duyệt";
+        $trangThai = "Chưa duyệt";
         $ngayDat = (new DateTime())->format('Y-m-d H:i:s');
         $ngayGiao = (new DateTime())->format('Y-m-d H:i:s');
-        $stmt->execute([$makh, $tenkh, $sdtKH, $tinh, $quan, $huyen, $duong, $noteKH, $ngayDat, $ngayGiao, $trangThai, $tienhang, $tiengiam, $tongtien]);
-       //Mã đơn hàng
+        $stmt->execute([$makh, $email, $tenkh, $sdtKH, $tinh, $quan, $huyen, $duong, $noteKH, $ngayDat, $ngayGiao, $trangThai, $tienhang, $tiengiam, $tongtien]);
+        //Mã đơn hàng
         $last_insert_id = $conn->lastInsertId();
 
         // Insert invoice details
@@ -608,10 +680,10 @@ function order_product( $makh , $tenkh , $sdtKH , $tinh,$quan,$huyen,$duong , $n
             $DonGia = str_replace(',', '', $item['DonGia']);
 
             $ttt = ($item['SoLuong'] * $DonGia);
-           
+
             $dg = $DonGia;
             // $mamau = $item['Mau'];
-            
+
 
             $sql3 = "INSERT INTO `chitietdonhang`(`madonhang`, `MaSP`, `Size`,`soluong`, `dongia`, `thanhtien`) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt3 = $conn->prepare($sql3);
@@ -625,9 +697,9 @@ function order_product( $makh , $tenkh , $sdtKH , $tinh,$quan,$huyen,$duong , $n
 
         // Insert recipient information
         $sql4 = "INSERT INTO `addresskh`(`AccountID`, `FullName`, `SDTKH`,`tinhKH`, `quanKH`, `huyenKH`, `duongKH`) VALUES (?, ?, ?, ?, ? , ? , ?)";
-    
+
         $stmt4 = $conn->prepare($sql4);
-        $stmt4->execute([$makh, $tenkh, $sdtKH, $tinh, $quan, $huyen , $duong]);
+        $stmt4->execute([$makh, $tenkh, $sdtKH, $tinh, $quan, $huyen, $duong]);
 
         // Commit transaction
         $conn->commit();
@@ -644,7 +716,8 @@ function order_product( $makh , $tenkh , $sdtKH , $tinh,$quan,$huyen,$duong , $n
 }
 
 
-function loadOrderUser($idkhachhang){
+function loadOrderUser($idkhachhang)
+{
     global $conn;
     try {
         $sql = "SELECT * FROM `donhang` WHERE MaKH = :idKhachhang";
@@ -660,7 +733,8 @@ function loadOrderUser($idkhachhang){
     }
 }
 
-function loadAddressUser($idkhachhang){
+function loadAddressUser($idkhachhang)
+{
     global $conn;
     try {
         $sql = "SELECT * FROM `addresskh` WHERE AccountID = :idKhachhang";

@@ -3,30 +3,10 @@ if (!isset($_SESSION['laclac_khachang'])) {
     header('location:?View=login');
 } else {
     $kh = $_SESSION['laclac_khachang'];
+    $user = new Database();
+    $detail = $user->loadAccountDetail($kh['AccountID']);
 }
 ?>
-
-<!DOCTYPE html>
-<html class="no-js" lang="zxx">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="meta description">
-    <title>Floda - Flower eCommerce Bootstrap 4 Template</title>
-
-    <!--=== Favicon ===-->
-    <link rel="shortcut icon" href="../Library/assets/img/favicon.ico" type="image/x-icon" />
-
-    <!-- Google fonts include -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,900%7CYesteryear" rel="stylesheet">
-
-    <!-- All Vendor & plugins CSS include -->
-    <link href="../Library/assets/css/vendor.css" rel="stylesheet">
-    <!-- Main Style CSS -->
-    <link href="../Library/assets/css/style.css" rel="stylesheet">
-</head>
 
 <body>
     <!-- main wrapper start -->
@@ -171,25 +151,26 @@ if (!isset($_SESSION['laclac_khachang'])) {
                                                 <div class="myaccount-content">
                                                     <h3>Thông tin tài khoản</h3>
                                                     <div class="account-details-form">
-                                                        <form action="#">
+                                                      <?php foreach($detail as $item){ ?>
+                                                        <form action="?View=my-account-xuly" method="post" enctype="multipart/form-data">
                                                             
-                                                            <div class="single-input-item">
+                                                             <div class="single-input-item">
                                                                 <label for="display-name" class="required">Họ và tên</label>
-                                                                <input type="text" id="fullname" name="fullname" placeholder="Display Name" />
+                                                                <input type="text" id="fullname" name="fullname" placeholder="Display Name" value="<?php echo $item["FullName"]; ?>"/>
                                                             </div>
                                                             <div class="single-input-item">
                                                                 <label for="email" class="required">Địa chỉ Email</label>
-                                                                <input type="email" id="email" placeholder="Email Address" />
+                                                                <input type="email" id="email" placeholder="Email Address"value="<?php echo $item["Email"]; ?>" />
                                                             </div>
                                                             <div class="single-input-item">
                                                                     <label for="current-pwd" class="required">Mật khẩu cũ</label>
-                                                                    <input type="password" id="current-pwd" placeholder="Current Password" />
+                                                                    <input type="password" id="current-pwd" placeholder="Current Password" value="<?php echo $item["MatKhau"]; ?>"/>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-lg-6">
                                                                         <div class="single-input-item">
                                                                             <label for="new-pwd" class="required">Mật khẩu mới</label>
-                                                                            <input type="password" id="new-pwd" placeholder="New Password" />
+                                                                            <input type="password" id="new-pwd" placeholder="New Password">"
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
@@ -204,6 +185,7 @@ if (!isset($_SESSION['laclac_khachang'])) {
                                                                 <button class="btn btn__bg">Save Changes</button>
                                                             </div>
                                                         </form>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                             </div> <!-- Single Tab Content End -->
